@@ -5,21 +5,30 @@ export default [{
     path: '/',
     component: App, //顶层路由，对应index.html
     children: [
+        //地址为空时跳转home页面
+        {
+            path: '',
+            redirect: '/home'
+        },
         {
             path: '/home', 
-            component: r => require.ensure([], () => r(require('./pages/Home.vue')), 'home')
+            component: r => require.ensure([], () => r(require('./pages/home/Home.vue')), 'home')
         },
         {
-            path: '/about', 
-            component: r => require.ensure([], () => r(require('./pages/About.vue')), 'about')
+            path: '/teach', 
+            component: r => require.ensure([], () => r(require('./pages/teach/TeachList.vue')), 'teach')
         },
         {
-            path: '/cart', 
-            component: r => require.ensure([], () => r(require('./pages/Cart.vue')), 'cart')
+            path: '/operate', 
+            component: r => require.ensure([], () => r(require('./pages/operate/Operate.vue')), 'operate')
+        },
+        {
+            path: '/topic',
+            component: r => require.ensure([], () => r(require('./pages/topic/Topic.vue')), 'topic')
         },
         {
             path: '/user', 
-            component: r => require.ensure([], () => r(require('./pages/User.vue')), 'user')
+            component: r => require.ensure([], () => r(require('./pages/my/User.vue')), 'user')
         }
     ]
 }]

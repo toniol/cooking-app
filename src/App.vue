@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div class="page" v-tabbar="{'menus': menus, menuColor: '#B5B5B5', activeMenuColor: '#44CC00', onMenuClick: menuClicked}">
+		<div class="page" v-tabbar="{'menus': menus, menuColor: '#aaa', activeMenuColor: '#EA5A49', onMenuClick: menuClicked}">
             <router-view></router-view>
         </div>
     </div>
@@ -18,17 +18,23 @@
             path: '/home'
           },
           {
-            iconOn: 'ion-ios-pricetags',
-            iconOff: 'ion-ios-pricetags-outline',
-            text: '关于',
-            path: '/about'
+            iconOn: 'ion-ios-videocam',
+            iconOff: 'ion-ios-videocam-outline',
+            text: '视频教学',
+            path: '/teach'
           },
           {
-            iconOn: 'ion-ios-cart',
-            iconOff: 'ion-ios-cart-outline',
-            text: '购物车',
-            path: '/cart',
-            badge: '5'
+            iconOn: 'ion-ios-flower',
+            iconOff: 'ion-ios-flower-outline',
+            text: '模拟操作',
+            path: '/operate'
+          },
+          {
+              iconOn: 'ion-ios-chatboxes',
+              iconOff: 'ion-ios-chatboxes-outline',
+              text: '互动交流',
+              path: '/topic',
+              badge: '5'
           },
           {
             iconOn: 'ion-ios-person',
