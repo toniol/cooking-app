@@ -12,23 +12,23 @@ export default [{
         },
         {
             path: '/home', 
-            component: r => require.ensure([], () => r(require('./pages/home/Home.vue')), 'home')
+            component: r => require.ensure([], () => r(require('./pages/home/home.vue')), 'home')
         },
         {
             path: '/teach', 
-            component: r => require.ensure([], () => r(require('./pages/teach/TeachList.vue')), 'teach')
+            component: r => require.ensure([], () => r(require('./pages/teach/teach.vue')), 'teach')
         },
         {
             path: '/operate', 
-            component: r => require.ensure([], () => r(require('./pages/operate/Operate.vue')), 'operate')
+            component: r => require.ensure([], () => r(require('./pages/operate/operate.vue')), 'operate')
         },
         {
             path: '/topic',
-            component: r => require.ensure([], () => r(require('./pages/topic/Topic.vue')), 'topic')
+            component: r => require.ensure([], () => r(require('./pages/topic/topic.vue')), 'topic')
         },
         {
             path: '/user', 
-            component: r => require.ensure([], () => r(require('./pages/my/User.vue')), 'user')
+            component: r => require.ensure([], () => r(require('./pages/my/user.vue')), 'user')
         }
     ]
 }]
