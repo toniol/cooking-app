@@ -29,7 +29,8 @@ if (process.env.NODE_ENV == 'development') {
     let topicList = (type, funid) => setpromise(discuss.topicList)
     let discussList = (type, topicid) => setpromise(discuss.discussList)
     let accountLogin = (type, username, password) => setpromise(login.userInfo)
-    let accountState = (type) => setpromise(login.sessionState)
+    let accountState = type => setpromise(login.sessionState)
+    let accountToken = username => setpromise(login.validate_token);
 }
 
 // let sendLogin = (code, mobile, validate_token) => setpromise(login.userInfo);
