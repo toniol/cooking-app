@@ -1,8 +1,8 @@
 <template>
-	<div>
-		<div class="page" v-tabbar="{'menus': menus, menuColor: '#aaa', activeMenuColor: '#EA5A49', onMenuClick: menuClicked}">
-            <router-view></router-view>
-        </div>
+		<div v-tabbar="{'menus': menus, menuColor: '#aaa', activeMenuColor: '#EA5A49', onMenuClick: menuClicked}">
+      <transition name="router-fade" mode="out-in">
+        <router-view></router-view>
+      </transition>
     </div>
 </template>
 
@@ -57,3 +57,12 @@
     }
   }
 </script>
+
+<style lang="scss">
+  .router-fade-enter-active, .router-fade-leave-active {
+	  	transition: opacity .2s;
+	}
+	.router-fade-enter, .router-fade-leave-active {
+	  	opacity: 0;
+	}
+</style>

@@ -3430,6 +3430,10 @@ svgo@^0.7.0:
     sax "~1.2.1"
     whet.extend "~0.9.9"
 
+swipe-js-iso@^2.0.3:
+  version "2.0.3"
+  resolved "http://registry.npm.taobao.org/swipe-js-iso/download/swipe-js-iso-2.0.3.tgz#76892ca4fc2928f384ac042739a25f7afe6fcf74"
+
 tapable@^0.2.5, tapable@~0.2.5:
   version "0.2.6"
   resolved "http://registry.npm.taobao.org/tapable/download/tapable-0.2.6.tgz#206be8e188860b514425375e6f1ae89bfb01fd8d"
@@ -3616,16 +3620,23 @@ vm-browserify@0.0.4:
     indexof "0.0.1"
 
 vonic@^2.0.0-beta.10:
-  version "2.0.0-beta.10"
-  resolved "http://registry.npm.taobao.org/vonic/download/vonic-2.0.0-beta.10.tgz#13b7589bb8a0ea0d7ca18725bc02a2f0a15e214e"
+  version "2.0.0-rc.1"
+  resolved "http://registry.npm.taobao.org/vonic/download/vonic-2.0.0-rc.1.tgz#0a13f7e2926187e923fac2c66653ff2e826cb216"
   dependencies:
     axios "^0.15.3"
     es6-promise "^4.0.5"
     fastclick "^1.0.6"
     object-assign "^4.1.1"
+    vswipe "1.0.0"
     vue "^2.1.8"
     vue-router "^2.1.0"
-    vue-scroller "2.2.0-alpha.2"
+    vue-scroller "2.2.0-alpha.3"
+
+vswipe@1.0.0:
+  version "1.0.0"
+  resolved "http://registry.npm.taobao.org/vswipe/download/vswipe-1.0.0.tgz#fcd084d1664c5006ba063d63044e1b9aad6fd922"
+  dependencies:
+    swipe-js-iso "^2.0.3"
 
 vue-hot-reload-api@^2.0.1:
   version "2.0.11"
@@ -3651,9 +3662,9 @@ vue-router@^2.1.0:
   version "2.3.0"
   resolved "http://registry.npm.taobao.org/vue-router/download/vue-router-2.3.0.tgz#a25c8359e8ca989d22ce79f64322eb0ad0c8670f"
 
-vue-scroller@2.2.0-alpha.2:
-  version "2.2.0-alpha.2"
-  resolved "http://registry.npm.taobao.org/vue-scroller/download/vue-scroller-2.2.0-alpha.2.tgz#20415871b500d5a7528a1e34154a5a0ffb3fb30c"
+vue-scroller@2.2.0-alpha.3:
+  version "2.2.0-alpha.3"
+  resolved "http://registry.npm.taobao.org/vue-scroller/download/vue-scroller-2.2.0-alpha.3.tgz#a1fa27b982cef182d2eac00d3aade7c659ce57f5"
   dependencies:
     vue "^2.1.0"
     vue-router "^2.1.0"
@@ -3677,6 +3688,10 @@ vue-template-es2015-compiler@^1.2.2:
   resolved "http://registry.npm.taobao.org/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.5.1.tgz#0c36cc57aa3a9ec13e846342cb14a72fcac8bd93"
 
 vue@^2.1.0, vue@^2.1.8:
+  version "2.2.5"
+  resolved "http://registry.npm.taobao.org/vue/download/vue-2.2.5.tgz#528eba68447d7eff99f86767b31176aa656c6963"
+
+vue@2.2.4:
   version "2.2.4"
   resolved "http://registry.npm.taobao.org/vue/download/vue-2.2.4.tgz#d0a3a050a80a12356d7950ae5a7b3131048209cc"
 
