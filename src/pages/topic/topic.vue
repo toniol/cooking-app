@@ -1,5 +1,5 @@
 <template>
-  <div class="page has-navbar has-tabbar has-dialogue" v-nav="{ title: '互动交流' }">
+  <div class="page has-navbar has-tabbar has-dialogue" v-nav="{ title: '互动交流' }" v-tabbar-menu-index="3">
     <div class="page-content">
         <div class="topisList">
             <div class="weui-cell moments__post">

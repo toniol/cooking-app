@@ -65,4 +65,29 @@
 	.router-fade-enter, .router-fade-leave-active {
 	  	opacity: 0;
 	}
+  a {
+    text-decoration: none;
+  }
+  .navbar {
+    z-index: 12;
+  }
+  .page-content {
+    z-index: 11;
+  }
+  .tabbar::before {
+    content: '';
+    position: absolute;
+    background-color: #ddd;
+    display: block;
+    left: 0;
+    top: 0;
+    bottom: auto;
+    right: auto;
+    height: 1px;
+    width: 100%;
+    transform-origin: 0% 0%;
+    -webkit-transform-origin: 0% 0%;
+    transform: scaleY(0.5);
+    -webkit-transform: scaleY(0.5);
+  }
 </style>

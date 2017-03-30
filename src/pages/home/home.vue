@@ -1,5 +1,5 @@
 <template>
-  <div class="page has-navbar has-tabbar" v-nav="{ title: '首页' }">
+  <div class="page has-navbar has-tabbar" v-nav="{ title: '首页' }" v-tabbar-menu-index="0">
     <div class="page-content">
       <swiper ref="swiper" 
         direction="horizontal" 
@@ -27,28 +27,31 @@
           <h2>专业动态</h2>
         </item>
         <item class="item-avatar item-ios">
-            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHN0eWxlPSJiYWNrZ3JvdW5kOiBub25lOyI+CiAgPGRlZnM+CiAgICA8Y2lyY2xlIGlkPSJhIiBjeD0iMjU2IiBjeT0iMjU2IiByPSIyNTYiLz4KICAgIDxtYXNrIGlkPSJiIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgZmlsbD0id2hpdGUiPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNhIi8+CiAgICA8L21hc2s+CiAgICA8cG9seWdvbiBpZD0iYyIgcG9pbnRzPSIxMTUuNTY5IC4wMTcgMTQ5Ljk4NCA1Ni4zOTkgMTg4LjEwOCAuMDE3IDI5OS45NjcgLjAxNyAxNDkuOTg0IDIyOS43NzMgMCAuMDE3Ii8+CiAgPC9kZWZzPgogIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICA8dXNlIHN0cm9rZT0iIzQ3QjU4NCIgc3Ryb2tlLXdpZHRoPSIxMiIgbWFzaz0idXJsKCNiKSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiB4bGluazpocmVmPSIjYSIvPgogICAgPGNpcmNsZSBjeD0iNDM1LjUiIGN5PSI3OC41IiByPSIyNi41IiBmaWxsPSIjNDdCNTg0Ii8+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMDYgMTcxKSI+CiAgICAgIDxtYXNrIGlkPSJkIiBmaWxsPSJ3aGl0ZSI+CiAgICAgICAgPHVzZSB4bGluazpocmVmPSIjYyIvPgogICAgICA8L21hc2s+CiAgICAgIDx1c2UgZmlsbD0iIzQ3QjU4NCIgeGxpbms6aHJlZj0iI2MiLz4KICAgICAgPHBvbHlnb24gZmlsbD0iIzMyNTg0RiIgcG9pbnRzPSIyOTkuOTY3IC04OS40NDggMTQ5Ljk4NCAxNDAuMzA4IDAgLTg5LjQ0OCIgbWFzaz0idXJsKCNkKSIvPgogICAgPC9nPgogIDwvZz4KPC9zdmc+Cg==" style="border-radius: 0"> 
+          <router-link :to="{name: 'newsDetail'}">
+            <img src="../../assets/images/baian.jpg" style="border-radius: 0"> 
             <div class="title"> 标题一 </div> 
             <div class="item-note"> 说明说明说明说明 </div> 
+          </router-link>
         </item>
         <item class="item-avatar item-ios">
-          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHN0eWxlPSJiYWNrZ3JvdW5kOiBub25lOyI+CiAgPGRlZnM+CiAgICA8Y2lyY2xlIGlkPSJhIiBjeD0iMjU2IiBjeT0iMjU2IiByPSIyNTYiLz4KICAgIDxtYXNrIGlkPSJiIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgZmlsbD0id2hpdGUiPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNhIi8+CiAgICA8L21hc2s+CiAgICA8cG9seWdvbiBpZD0iYyIgcG9pbnRzPSIxMTUuNTY5IC4wMTcgMTQ5Ljk4NCA1Ni4zOTkgMTg4LjEwOCAuMDE3IDI5OS45NjcgLjAxNyAxNDkuOTg0IDIyOS43NzMgMCAuMDE3Ii8+CiAgPC9kZWZzPgogIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICA8dXNlIHN0cm9rZT0iIzQ3QjU4NCIgc3Ryb2tlLXdpZHRoPSIxMiIgbWFzaz0idXJsKCNiKSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiB4bGluazpocmVmPSIjYSIvPgogICAgPGNpcmNsZSBjeD0iNDM1LjUiIGN5PSI3OC41IiByPSIyNi41IiBmaWxsPSIjNDdCNTg0Ii8+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMDYgMTcxKSI+CiAgICAgIDxtYXNrIGlkPSJkIiBmaWxsPSJ3aGl0ZSI+CiAgICAgICAgPHVzZSB4bGluazpocmVmPSIjYyIvPgogICAgICA8L21hc2s+CiAgICAgIDx1c2UgZmlsbD0iIzQ3QjU4NCIgeGxpbms6aHJlZj0iI2MiLz4KICAgICAgPHBvbHlnb24gZmlsbD0iIzMyNTg0RiIgcG9pbnRzPSIyOTkuOTY3IC04OS40NDggMTQ5Ljk4NCAxNDAuMzA4IDAgLTg5LjQ0OCIgbWFzaz0idXJsKCNkKSIvPgogICAgPC9nPgogIDwvZz4KPC9zdmc+Cg==" style="border-radius: 0"> 
+            <img src="../../assets/images/baian.jpg" style="border-radius: 0"> 
             <div class="title"> 标题二 </div> 
             <div class="item-note"> 说明说明说明说明 </div>
         </item>
       </list>
 
       <list class="list-ios">
+      
         <item>
           <h2>通知动态</h2>
         </item>
         <item class="item-avatar item-ios">
-            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHN0eWxlPSJiYWNrZ3JvdW5kOiBub25lOyI+CiAgPGRlZnM+CiAgICA8Y2lyY2xlIGlkPSJhIiBjeD0iMjU2IiBjeT0iMjU2IiByPSIyNTYiLz4KICAgIDxtYXNrIGlkPSJiIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgZmlsbD0id2hpdGUiPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNhIi8+CiAgICA8L21hc2s+CiAgICA8cG9seWdvbiBpZD0iYyIgcG9pbnRzPSIxMTUuNTY5IC4wMTcgMTQ5Ljk4NCA1Ni4zOTkgMTg4LjEwOCAuMDE3IDI5OS45NjcgLjAxNyAxNDkuOTg0IDIyOS43NzMgMCAuMDE3Ii8+CiAgPC9kZWZzPgogIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICA8dXNlIHN0cm9rZT0iIzQ3QjU4NCIgc3Ryb2tlLXdpZHRoPSIxMiIgbWFzaz0idXJsKCNiKSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiB4bGluazpocmVmPSIjYSIvPgogICAgPGNpcmNsZSBjeD0iNDM1LjUiIGN5PSI3OC41IiByPSIyNi41IiBmaWxsPSIjNDdCNTg0Ii8+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMDYgMTcxKSI+CiAgICAgIDxtYXNrIGlkPSJkIiBmaWxsPSJ3aGl0ZSI+CiAgICAgICAgPHVzZSB4bGluazpocmVmPSIjYyIvPgogICAgICA8L21hc2s+CiAgICAgIDx1c2UgZmlsbD0iIzQ3QjU4NCIgeGxpbms6aHJlZj0iI2MiLz4KICAgICAgPHBvbHlnb24gZmlsbD0iIzMyNTg0RiIgcG9pbnRzPSIyOTkuOTY3IC04OS40NDggMTQ5Ljk4NCAxNDAuMzA4IDAgLTg5LjQ0OCIgbWFzaz0idXJsKCNkKSIvPgogICAgPC9nPgogIDwvZz4KPC9zdmc+Cg==" style="border-radius: 0"> 
+            <img src="../../assets/images/baian.jpg" style="border-radius: 0"> 
             <div class="title"> 标题一 </div> 
             <div class="item-note"> 说明说明说明说明 </div> 
         </item>
         <item class="item-avatar item-ios">
-          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHN0eWxlPSJiYWNrZ3JvdW5kOiBub25lOyI+CiAgPGRlZnM+CiAgICA8Y2lyY2xlIGlkPSJhIiBjeD0iMjU2IiBjeT0iMjU2IiByPSIyNTYiLz4KICAgIDxtYXNrIGlkPSJiIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgZmlsbD0id2hpdGUiPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNhIi8+CiAgICA8L21hc2s+CiAgICA8cG9seWdvbiBpZD0iYyIgcG9pbnRzPSIxMTUuNTY5IC4wMTcgMTQ5Ljk4NCA1Ni4zOTkgMTg4LjEwOCAuMDE3IDI5OS45NjcgLjAxNyAxNDkuOTg0IDIyOS43NzMgMCAuMDE3Ii8+CiAgPC9kZWZzPgogIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICA8dXNlIHN0cm9rZT0iIzQ3QjU4NCIgc3Ryb2tlLXdpZHRoPSIxMiIgbWFzaz0idXJsKCNiKSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiB4bGluazpocmVmPSIjYSIvPgogICAgPGNpcmNsZSBjeD0iNDM1LjUiIGN5PSI3OC41IiByPSIyNi41IiBmaWxsPSIjNDdCNTg0Ii8+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMDYgMTcxKSI+CiAgICAgIDxtYXNrIGlkPSJkIiBmaWxsPSJ3aGl0ZSI+CiAgICAgICAgPHVzZSB4bGluazpocmVmPSIjYyIvPgogICAgICA8L21hc2s+CiAgICAgIDx1c2UgZmlsbD0iIzQ3QjU4NCIgeGxpbms6aHJlZj0iI2MiLz4KICAgICAgPHBvbHlnb24gZmlsbD0iIzMyNTg0RiIgcG9pbnRzPSIyOTkuOTY3IC04OS40NDggMTQ5Ljk4NCAxNDAuMzA4IDAgLTg5LjQ0OCIgbWFzaz0idXJsKCNkKSIvPgogICAgPC9nPgogIDwvZz4KPC9zdmc+Cg==" style="border-radius: 0"> 
+          <img src="../../assets/images/baian.jpg" style="border-radius: 0"> 
             <div class="title"> 标题二 </div> 
             <div class="item-note"> 说明说明说明说明 </div>
         </item>
@@ -86,11 +89,28 @@
     background-color: #eee;
     text-align: center;
   }
+  .list-ios::before {
+    content: '';
+    position: absolute;
+    background-color: #ddd;
+    display: block;
+    left: 0;
+    top: 0;
+    bottom: auto;
+    right: auto;
+    height: 1px;
+    width: 100%;
+    transform-origin: 0% 0%;
+    -webkit-transform-origin: 0% 0%;
+    transform: scaleY(0.5);
+    -webkit-transform: scaleY(0.5);
+  }
   .item-ios.item-avatar .title, 
   .list-ios>.item.item-avatar .title {
     font-size: 16px;
     line-height: 22px;
     margin-bottom: 6px;
+    color: #444;
   }
   .item-ios.item-avatar .item-note,
   .list-ios>.item.item-avatar .item-note  {

@@ -1,9 +1,9 @@
 <template>
-  <div class="page has-navbar has-tabbar" v-nav="{ title: '任务列表', showBackButton: true }">
+  <div class="page has-navbar" v-nav="{ title: '任务列表', showBackButton: true }"  v-tabbar-menu-index="2">
     <div class="page-content">
       <div class="tasklist">
         <div class="tasklist-item"> 
-            <router-link :to="{name: 'task'}"> 
+            <router-link :to="{name: 'tips'}"> 
                 <img alt="" src="../../../assets/images/photo-1471347334704-25603ca7d537.jpg" /> 
                 <div class="tasklist-cover"> 
                     <h3>任务标题</h3> 
@@ -12,7 +12,7 @@
             </router-link> 
         </div>
         <div class="tasklist-item"> 
-            <router-link :to="{name: 'task'}"> 
+            <router-link :to="{name: 'tips'}"> 
                 <img alt="" src="../../../assets/images/photo-1471347334704-25603ca7d537.jpg" /> 
                 <div class="tasklist-cover"> 
                     <h3>任务标题</h3> 
@@ -21,7 +21,7 @@
             </router-link> 
         </div>
         <div class="tasklist-item"> 
-            <router-link :to="{name: 'task'}"> 
+            <router-link :to="{name: 'tips'}"> 
                 <img alt="" src="../../../assets/images/photo-1471347334704-25603ca7d537.jpg" /> 
                 <div class="tasklist-cover"> 
                     <h3>任务标题</h3> 
@@ -30,7 +30,7 @@
             </router-link> 
         </div>
         <div class="tasklist-item"> 
-            <router-link :to="{name: 'task'}"> 
+            <router-link :to="{name: 'tips'}"> 
                 <img alt="" src="../../../assets/images/photo-1471347334704-25603ca7d537.jpg" /> 
                 <div class="tasklist-cover"> 
                     <h3>任务标题</h3> 

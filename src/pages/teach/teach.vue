@@ -1,5 +1,5 @@
 <template>
-  <div class="page has-navbar has-tabbar" v-nav="{ title: '视频教学' }">
+  <div class="page has-navbar has-tabbar" v-nav="{ title: '视频教学' }" v-tabbar-menu-index="1">
     <div class="page-content">
     <div class="list list-ios" style="padding-left: 5px;">
       <flexbox :gutter="0" wrap="wrap">

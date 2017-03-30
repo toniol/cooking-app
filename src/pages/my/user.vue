@@ -1,5 +1,5 @@
 <template>
-  <div class="page has-navbar has-tabbar" v-nav="{ title: '我的' }">
+  <div class="page has-navbar has-tabbar" v-nav="{ title: '我的' }" v-tabbar-menu-index="4">
     <div class="page-content">
       <blur :blur-amount=40 :url="url" :height="160">
         <div class="center">
@@ -20,12 +20,22 @@
           <i class="icon ion-ios-arrow-right"></i>
         </item>
       </list>
+
+      <br>
+      <br>
+      <div class="padding">
+        <md-button class="md-button button button-assertive button-block" @click.native="logout()">
+          注 销
+        </md-button>
+      </div>
+
     </div>
   </div>
 </template>
 
 <script>
   import Blur from '../../components/cBlur/cBlur'
+  import { removeSess } from '../../utils'
 
   export default {
     components: {
@@ -34,6 +44,12 @@
     data () {
       return {
         url: "https://o3e85j0cv.qnssl.com/waterway-107810__340.jpg"
+      }
+    },
+    methods: {
+      logout () {
+        removeSess('userinfo')
+        $router.push({name: 'login'})
       }
     }
   }
