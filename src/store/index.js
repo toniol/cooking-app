@@ -7,13 +7,11 @@ import getters from './getters'
 
 Vue.use(Vuex)
 
-const store =  new Vuex.Store({
+export default new Vuex.Store({
 	state,
 	getters,
 	actions,
 	mutations
 })
-
-export default store
 
 
