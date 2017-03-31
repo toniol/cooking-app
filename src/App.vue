@@ -3,13 +3,23 @@
       <transition name="router-fade" mode="out-in">
         <router-view></router-view>
       </transition>
+      <loading v-model="isLoading"></loading>
     </div>
 </template>
 
 <script>
+  import Loading from './components/loading/loading'
+
   export default {
+    components: {
+      Loading
+    },
+    created () {
+      console.log(this)
+    },
     data() {
       return {
+        isLoading: true,
         menus: [
           {
             iconOn: 'ion-ios-home',

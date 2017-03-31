@@ -26,34 +26,35 @@
         <item>
           <h2>专业动态</h2>
         </item>
-        <item class="item-avatar item-ios">
-          <router-link :to="{name: 'newsDetail'}">
-            <img src="../../assets/images/baian.jpg" style="border-radius: 0"> 
-            <div class="title"> 标题一 </div> 
-            <div class="item-note"> 说明说明说明说明 </div> 
+        <item v-for="item in zhuanye" :id="item.id" class="item-avatar item-ios">
+          <router-link :to="{name: 'newsDetail', query: {id: item.id}}">
+            <img :src="item.picurl" style="border-radius: 0"> 
+            <div class="title"> {{item.title}} </div> 
+            <div class="item-note"> {{item.releasetime}} </div> 
           </router-link>
         </item>
-        <item class="item-avatar item-ios">
-            <img src="../../assets/images/baian.jpg" style="border-radius: 0"> 
-            <div class="title"> 标题二 </div> 
-            <div class="item-note"> 说明说明说明说明 </div>
+        <item class="item-ios">
+          <router-link :to="{name: 'newsList', query: {funid: '1'}}">
+            查看更多>>
+          </router-link>
         </item>
       </list>
 
       <list class="list-ios">
-      
         <item>
           <h2>通知动态</h2>
         </item>
-        <item class="item-avatar item-ios">
-            <img src="../../assets/images/baian.jpg" style="border-radius: 0"> 
-            <div class="title"> 标题一 </div> 
-            <div class="item-note"> 说明说明说明说明 </div> 
+        <item v-for="item in tongzhi" :id="item.id" class="item-avatar item-ios">
+          <router-link :to="{name: 'newsDetail', query: {id: item.id}}">
+            <img :src="item.picurl" style="border-radius: 0"> 
+            <div class="title"> {{item.title}} </div> 
+            <div class="item-note"> {{item.releasetime}} </div>
+          </router-link>
         </item>
-        <item class="item-avatar item-ios">
-          <img src="../../assets/images/baian.jpg" style="border-radius: 0"> 
-            <div class="title"> 标题二 </div> 
-            <div class="item-note"> 说明说明说明说明 </div>
+        <item class="item-ios">
+          <router-link :to="{name: 'newsList', query: {funid: '2'}}">
+            查看更多>>
+          </router-link>
         </item>
       </list>
     </div>
@@ -61,20 +62,67 @@
 </template>
 <script>
   import { Swiper, SwiperItem } from '../../components/swiper/'
+  import { ajax } from '../../config/ajax'
 
   export default {
     data () {
       return {
-
+        zhuanye: [],
+        tongzhi: []
       }
     },
     components: {
       Swiper,
       SwiperItem
     },
+    created(){
+      this.initData()
+    },
     methods: {
       onClick () {
         console.log('swiper click')
+      },
+      ajaxZhuanye () {
+        let self = this
+        // 获取专业动态
+        ajax({
+          api: 'article',
+          params: {
+            type: 'getArticleList',
+            funid: '1'
+          }
+        })
+        .then(function(res){
+          if(!res.data.errcode){
+            self.zhuanye = res.data.data.slice(0, 2)
+          }
+        })
+        .catch(function(err){
+            console.log(err);
+        })
+      },
+      ajaxTongzhi () {
+        let self = this
+        // 获取通知公告
+        ajax({
+          api: 'article',
+          params: {
+            type: 'getArticleList',
+            funid: '2'
+          }
+        })
+        .then(function(res){
+          if(!res.data.errcode){
+            self.tongzhi = res.data.data.slice(0, 2)
+          }
+        })
+        .catch(function(err){
+            console.log(err);
+        })
+      },
+      async initData () {
+        this.ajaxZhuanye()
+        this.ajaxTongzhi()
       }
     }
   }

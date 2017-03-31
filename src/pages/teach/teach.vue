@@ -3,47 +3,14 @@
     <div class="page-content">
     <div class="list list-ios" style="padding-left: 5px;">
       <flexbox :gutter="0" wrap="wrap">
-        <flexbox-item :span="1/2">
-          <router-link :to="{name: 'play'}">
+        <flexbox-item v-for="item in videoList" :span="1/2">
+          <router-link :to="{name: 'play', query: {id: item.id}}">
             <div class="videoBox"> 
               <div class="cover"> 
-                <img alt="" src="../../assets/images/photo-1466495227171-d05d7e3ac2b3.jpg"> 
-                <span class="label"><i class="ion-ios-at-outline"></i>张三</span> 
+                <img alt="" :src="item.picurl"> 
+                <span class="label">&nbsp;&nbsp;{{item.releasetime}}</span> 
               </div> 
-              <p class="title">标题</p> 
-            </div>
-          </router-link>
-        </flexbox-item>
-        <flexbox-item :span="1/2">
-          <router-link :to="{name: 'play'}">
-            <div class="videoBox"> 
-              <div class="cover"> 
-                <img alt="" src="../../assets/images/photo-1471347334704-25603ca7d537.jpg"> 
-                <span class="label"><i class="ion-ios-at-outline"></i>李四</span> 
-              </div> 
-              <p class="title">标题</p> 
-            </div>
-          </router-link>
-        </flexbox-item>
-        <flexbox-item :span="1/2">
-          <router-link :to="{name: 'play'}">
-            <div class="videoBox"> 
-              <div class="cover"> 
-                <img alt="" src="../../assets/images/photo-1471347334704-25603ca7d537.jpg"> 
-                <span class="label"><i class="ion-ios-at-outline"></i>李四</span> 
-              </div> 
-              <p class="title">标题</p> 
-            </div>
-          </router-link>
-        </flexbox-item>
-        <flexbox-item :span="1/2">
-          <router-link :to="{name: 'play'}">
-            <div class="videoBox"> 
-              <div class="cover"> 
-                <img alt="" src="../../assets/images/photo-1471347334704-25603ca7d537.jpg"> 
-                <span class="label"><i class="ion-ios-at-outline"></i>李四</span> 
-              </div> 
-              <p class="title">标题</p> 
+              <p class="title">{{item.title}}</p> 
             </div>
           </router-link>
         </flexbox-item>
@@ -55,11 +22,41 @@
 
 <script>
   import { Flexbox, FlexboxItem } from '../../components/flexbox/index.vue'
+  import { ajax } from '../../config/ajax'
 
   export default {
+    data () {
+      return {
+        videoList: []
+      }
+    },
     components: {
       Flexbox,
       FlexboxItem
+    },
+    created () {
+      this.initData()
+    },
+    methods: {
+      async initData () {
+        let self = this
+        // 获取通知公告
+        ajax({
+          api: 'article',
+          params: {
+            type: 'getArticleList',
+            funid: '3'
+          }
+        })
+        .then(function(res){
+          if(!res.data.errcode){
+            self.videoList = res.data.data
+          }
+        })
+        .catch(function(err){
+            console.log(err);
+        })
+      } 
     }
   }
 </script>

@@ -14,6 +14,12 @@
   </div>
 </template>
 
+<script>
+  export default {
+    
+  }
+</script>
+
 <style lang="scss" scoped>
   .article {
     padding: 20px;

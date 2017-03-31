@@ -1,8 +1,8 @@
 {
-  "name": "vonic-template",
-  "version": "2.0.0",
-  "description": "Webpack Template for Vonic 2.",
-  "author": "wangdahoo <157195705@qq.com>",
+  "name": "cooking",
+  "version": "0.2.0",
+  "description": "丹阳烹饪 App",
+  "author": "toniol <taoyingning2009@gmail.com>",
   "scripts": {
     "dev": "webpack-dev-server --inline --hot --port=8081",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
@@ -17,6 +17,7 @@
     "babel-core": "^6.0.0",
     "babel-loader": "^6.0.0",
     "babel-preset-es2015": "^6.0.0",
+    "babel-preset-stage-3": "^6.22.0",
     "cross-env": "^3.0.0",
     "css-loader": "^0.25.0",
     "file-loader": "^0.9.0",
@@ -25,7 +26,7 @@
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "vue-loader": "^10.0.0",
-    "vue-template-compiler": "^2.1.0",
+    "vue-template-compiler": "2.2.4",
     "webpack": "^2.2.0",
     "webpack-dev-server": "^2.3.0"
   }

@@ -3,7 +3,7 @@ import axios from 'axios'
 import Qs from 'qs'
 
 // 创建一个axios实例导出，并且自定义其配置
-export default (config) => {
+export const ajax = (config) => {
 
   const baseURL = 'http://10.1.80.229/app/ajax/'
   const suffix = '.ashx'
@@ -28,7 +28,7 @@ export default (config) => {
 
     transformResponse: [function (data) {
       // 这里提前处理返回的数据
-
+      data['errcode'] = (data.errcode === '0') ? 0 : data.errcode
       return data;
     }],
 

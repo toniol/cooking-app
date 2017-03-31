@@ -4,7 +4,7 @@
       <blur :blur-amount=40 :url="url" :height="160">
         <div class="center">
           <img :src="url">
-          <p>张三</p>
+          <p>{{username}}</p>
         </div>
       </blur>
 
@@ -35,7 +35,7 @@
 
 <script>
   import Blur from '../../components/cBlur/cBlur'
-  import { removeSess } from '../../utils'
+  import { removeSess, getSess } from '../../utils'
 
   export default {
     components: {
@@ -43,7 +43,14 @@
     },
     data () {
       return {
-        url: "https://o3e85j0cv.qnssl.com/waterway-107810__340.jpg"
+        url: "https://o3e85j0cv.qnssl.com/waterway-107810__340.jpg",
+        username: ''
+      }
+    },
+    created (){
+      let userinfo = getSess('userinfo')
+      if(userinfo){
+        this.username = userinfo.username
       }
     },
     methods: {

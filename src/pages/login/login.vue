@@ -17,8 +17,8 @@
 </template>
 
 <script>
-  import ajax from '../../config/ajax'
-  import { setSess } from '../../utils'
+  import { ajax } from '../../config/ajax'
+  import { getSess, setSess } from '../../utils'
 
   export default {
     data(){
@@ -27,21 +27,33 @@
         password: ''
       }
     },
+    created () {
+      let userinfo = getSess('userinfo')
+      if(userinfo){
+        $router.replace({name: 'home'})
+      }
+    },
     methods: {
       login () {
+          let self = this
           ajax({
             api: 'login',
             params: {
               'type': 'login',
-              'userid': this.username,
-              'pwd': this.password
+              'userid': self.username,
+              'pwd': self.password
             }
           })
           .then(function(res){
-              if(res.data.errcode === '0'){
+              if(!res.data.errcode){
                 let userinfo = res.data.data[0]
+                let redirect = self.$route.query.redirect
                 setSess('userinfo', userinfo)
-                $router.push({name: 'home'})
+                if(!redirect) {
+                  $router.push({name: 'home'})
+                } else {
+                  $router.push({path: redirect})
+                }
               } else {
                 $dialog.alert({
                   // 标题

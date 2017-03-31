@@ -27,6 +27,14 @@ export default [{
             component: r => require.ensure([], () => r(require('./pages/home/home.vue')), 'home')
         },
         {
+            path: 'home/newsList',
+            name: 'newsList',
+            meta: {
+                auth: true
+            },
+            component: r => require.ensure([], () => r(require('./pages/home/children/newsList.vue')), 'newsList')
+        },
+        {
             path: 'home/news',
             name: 'newsDetail',
             meta: {
@@ -99,6 +107,10 @@ export default [{
                 auth: true
             },
             component: r => require.ensure([], () => r(require('./pages/my/user.vue')), 'user')
+        },
+        { 
+            path: '*', 
+            redirect: 'home' 
         }
     ]
 }]

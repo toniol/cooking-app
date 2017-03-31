@@ -9,7 +9,7 @@ if ('addEventListener' in document) {
 }
 
 // vuex routes
-import store from './vuex/'
+import store from './store/index'
 import routes from './routes'
 import { getSess } from './utils'
 
@@ -21,18 +21,19 @@ Vonic.app.setConfig('beforeEach', (to, from, next) => {
     }
 
     if (to.matched.some(record => record.meta.auth)) {
+        // this route requires auth, check if logged in
+        // if not, redirect to login page.
         let userinfo = getSess('userinfo')
-        if (userinfo) {
-            // console.log('登录成功')
-            next()
+        if (!userinfo) {
+            next({
+                path: '/login',
+                query: { redirect: to.fullPath }
+            })
         } else {
-            if (to.path !== "/login") {
-                // console.log('登录失败')
-                next({name: 'login'});
-            }
+            next()
         }
     } else {
-        next()
+        next() // 确保一定要调用 next()
     }
 })
 
