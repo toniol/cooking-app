@@ -1,16 +1,10 @@
 import Vue from 'vue'
+import Vuex from 'vuex'
 import Vonic from 'vonic/src/index.js'
-
-import FastClick from 'fastclick'
-if ('addEventListener' in document) {
-    document.addEventListener('DOMContentLoaded', function () {
-        FastClick.attach(document.body);
-    }, false);
-}
-
-// vuex routes
-import store from './store/index'
+// store routes
 import routes from './routes'
+import store from './store/store'
+// utils
 import { getSess } from './utils'
 
 Vonic.app.setConfig('beforeEach', (to, from, next) => {
@@ -19,6 +13,8 @@ Vonic.app.setConfig('beforeEach', (to, from, next) => {
     } else {
         // $tabbar.$emit('showTabbar')
     }
+    
+    store.dispatch('showLoading')
 
     if (to.matched.some(record => record.meta.auth)) {
         // this route requires auth, check if logged in
@@ -41,5 +37,4 @@ Vue.use(Vonic.app, {
     routes,
     store
 })
-
 

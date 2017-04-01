@@ -82,7 +82,7 @@
       onClick () {
         console.log('swiper click')
       },
-      ajaxZhuanye () {
+      async ajaxZhuanye () {
         let self = this
         // 获取专业动态
         ajax({
@@ -101,7 +101,7 @@
             console.log(err);
         })
       },
-      ajaxTongzhi () {
+      async ajaxTongzhi () {
         let self = this
         // 获取通知公告
         ajax({
@@ -121,8 +121,10 @@
         })
       },
       async initData () {
-        this.ajaxZhuanye()
-        this.ajaxTongzhi()
+        await this.ajaxZhuanye()
+        await this.ajaxTongzhi()
+
+        this.$store.dispatch('hideLoading')
       }
     }
   }

@@ -1,6 +1,7 @@
 //config
 import axios from 'axios'
 import Qs from 'qs'
+import store from '../store/store'
 
 // 创建一个axios实例导出，并且自定义其配置
 export const ajax = (config) => {
@@ -28,8 +29,22 @@ export const ajax = (config) => {
 
     transformResponse: [function (data) {
       // 这里提前处理返回的数据
-      data['errcode'] = (data.errcode === '0') ? 0 : data.errcode
-      return data;
+      if(data.errcode === '0') {
+        data['errcode'] = 0
+        store.dispatch('hideLoading')
+        return data;
+      } 
+      // else {
+      //   store.dispatch('hideLoading')
+      //   $dialog.alert({
+      //     // 标题
+      //     title: '提示', 
+      //     // 内容
+      //     content: data.errmsg,
+      //     // 按钮文本
+      //     okText: '确定'
+      //   })
+      // }
     }],
 
     data: config.data ? config.data : {},
