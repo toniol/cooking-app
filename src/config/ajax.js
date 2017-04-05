@@ -31,20 +31,8 @@ export const ajax = (config) => {
       // 这里提前处理返回的数据
       if(data.errcode === '0') {
         data['errcode'] = 0
-        store.dispatch('hideLoading')
-        return data;
-      } 
-      // else {
-      //   store.dispatch('hideLoading')
-      //   $dialog.alert({
-      //     // 标题
-      //     title: '提示', 
-      //     // 内容
-      //     content: data.errmsg,
-      //     // 按钮文本
-      //     okText: '确定'
-      //   })
-      // }
+      }
+      return data
     }],
 
     data: config.data ? config.data : {},

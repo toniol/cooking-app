@@ -29,6 +29,7 @@
     },
     created () {
       let userinfo = getSess('userinfo')
+      this.$store.dispatch('hideLoading')
       if(userinfo){
         $router.replace({name: 'home'})
       }
@@ -45,21 +46,24 @@
             }
           })
           .then(function(res){
+              self.$store.dispatch('showLoading')
               if(!res.data.errcode){
                 let userinfo = res.data.data[0]
                 let redirect = self.$route.query.redirect
                 setSess('userinfo', userinfo)
+                self.$store.dispatch('hideLoading')
                 if(!redirect) {
                   $router.push({name: 'home'})
                 } else {
                   $router.push({path: redirect})
                 }
               } else {
+                self.$store.dispatch('hideLoading')
                 $dialog.alert({
                   // 标题
                   title: '提示', 
                   // 内容
-                  content: '用户名或密码错误，请重新登录',
+                  content: '[' + res.data.errcode + '] ' + res.data.errmsg,
                   // 按钮文本
                   okText: '确定'
                 })
