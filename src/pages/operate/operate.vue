@@ -4,42 +4,19 @@
       <tabs :tab-items="tabs" :tab-index="tabIndex" :on-tab-click="onTabClick"></tabs>
 
       <div class="cookingCateList"> 
-        <router-link :to="{name: 'taskList'}"> 
-          <div class="cooking-item baian"> 
-          <p class="label">白案区</p> 
+        <router-link v-for="item in taskTypeList" :to="{name: 'taskList', query: {id: item.id, tasklev: tabIndex+1, tasktype: item.tasktype }}"> 
+          <div :class="['cooking-item', item.class]"> 
+            <p class="label">{{item.tasktype}}</p> 
           </div> 
         </router-link> 
-        <router-link :to="{name: 'taskList'}"> 
-          <div class="cooking-item hongan"> 
-          <p class="label">红案区</p> 
-          </div> 
-        </router-link> 
-        <router-link :to="{name: 'taskList'}"> 
-          <div class="cooking-item lengping"> 
-          <p class="label">冷拼区</p> 
-          </div> 
-        </router-link> 
-        <router-link :to="{name: 'taskList'}"> 
-          <div class="cooking-item diaoke"> 
-          <p class="label">雕刻区</p> 
-          </div> 
-        </router-link> 
-        <router-link :to="{name: 'taskList'}"> 
-          <div class="cooking-item xidian"> 
-          <p class="label">西点区</p> 
-          </div> 
-        </router-link> 
-        <router-link :to="{name: 'taskList'}"> 
-          <div class="cooking-item xican"> 
-          <p class="label">西餐区</p> 
-          </div> 
-        </router-link> 
-        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+  import { ajax } from '../../config/ajax'
+
   export default {
     data () {
       return {
@@ -48,12 +25,62 @@
           "二级区",
           "三级区"
         ],
-        tabIndex: 0
+        tabIndex: 0,
+        taskTypeList: [],
+        tasktype: ''
       }
+    },
+    created () {
+      this.initData()
     },
     methods: {
       onTabClick (index) {
-        this.tabIndex = index
+        this.tabIndex = index        
+      },
+      async initData () {
+        let self = this
+        // 获取通知公告
+        ajax({
+          api: 'task',
+          params: {
+            type: 'getTaskType'
+          }
+        })
+        .then(function(res){
+          if(!res.data.errcode){
+            res.data.data.forEach(function(el) {
+              switch (el.tasktype) {
+                case '白案':
+                  el['class'] = 'baian'
+                  break;
+                case '红案':
+                  el['class'] = 'hongan'
+                  break;
+                case '冷拼':
+                  el['class'] = 'lengping'
+                  break;
+                case '雕刻':
+                  el['class'] = 'diaoke'
+                  break;
+                case '西点':
+                  el['class'] = 'xidian'
+                  break;
+                case '西餐':
+                  el['class'] = 'xican'
+                  break;
+
+                default:
+                  break;
+              }
+            }, this);
+
+            self.taskTypeList = res.data.data
+            self.$store.dispatch('hideLoading')
+          }
+        })
+        .catch(function(err){
+            console.log(err);
+        })
       }
     }
   }

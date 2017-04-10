@@ -25,6 +25,7 @@ Vonic.app.setConfig('beforeEach', (to, from, next) => {
                 path: '/login',
                 query: { redirect: to.fullPath }
             })
+            store.dispatch('hideLoading')
         } else {
             next()
         }

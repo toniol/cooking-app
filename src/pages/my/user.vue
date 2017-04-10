@@ -51,6 +51,7 @@
       let userinfo = getSess('userinfo')
       if(userinfo){
         this.username = userinfo.username
+        this.$store.dispatch('hideLoading')
       }
     },
     methods: {

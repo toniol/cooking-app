@@ -6,7 +6,9 @@ import store from '../store/store'
 // 创建一个axios实例导出，并且自定义其配置
 export const ajax = (config) => {
 
-  const baseURL = 'http://10.1.80.229/app/ajax/'
+  const host = 'http://10.1.80.229' // 测试地址
+  // const host = 'http://120.26.205.75:8015'  // 线上地址
+  const baseURL = host + '/app/ajax/'
   const suffix = '.ashx'
 
   return axios({
@@ -32,6 +34,18 @@ export const ajax = (config) => {
       if(data.errcode === '0') {
         data['errcode'] = 0
       }
+
+      data.data.forEach(function(el) {
+        if(el.picurl){
+          el.picurl = host + el.picurl
+        }
+
+        if(el.videourl){
+          el.videourl = host + el.videourl
+        }
+      }, this)
+      store.dispatch('hideLoading')
+      
       return data
     }],
 

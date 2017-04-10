@@ -51,6 +51,7 @@
         .then(function(res){
           if(!res.data.errcode){
             self.videoList = res.data.data
+            self.$store.dispatch('hideLoading')
           }
         })
         .catch(function(err){

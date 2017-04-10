@@ -2,39 +2,12 @@
   <div class="page has-navbar" v-nav="{ title: '任务列表', showBackButton: true }"  v-tabbar-menu-index="2">
     <div class="page-content">
       <div class="tasklist">
-        <div class="tasklist-item"> 
-            <router-link :to="{name: 'tips'}"> 
-                <img alt="" src="../../../assets/images/photo-1471347334704-25603ca7d537.jpg" /> 
+        <div class="tasklist-item" v-for="item in tasklist"> 
+            <router-link :to="{name: 'tips', query: {id: item.id}}"> 
+                <img alt="" :src="item.picurl" /> 
                 <div class="tasklist-cover"> 
-                    <h3>任务标题</h3> 
-                    <p class="tips clearfix"> <span class="info">等级: 一级</span> <span class="info">类别: 白案</span> <span class="author">赵四</span> </p> 
-                </div> 
-            </router-link> 
-        </div>
-        <div class="tasklist-item"> 
-            <router-link :to="{name: 'tips'}"> 
-                <img alt="" src="../../../assets/images/photo-1471347334704-25603ca7d537.jpg" /> 
-                <div class="tasklist-cover"> 
-                    <h3>任务标题</h3> 
-                    <p class="tips clearfix"> <span class="info">等级: 一级</span> <span class="info">类别: 白案</span> <span class="author">赵四</span> </p> 
-                </div> 
-            </router-link> 
-        </div>
-        <div class="tasklist-item"> 
-            <router-link :to="{name: 'tips'}"> 
-                <img alt="" src="../../../assets/images/photo-1471347334704-25603ca7d537.jpg" /> 
-                <div class="tasklist-cover"> 
-                    <h3>任务标题</h3> 
-                    <p class="tips clearfix"> <span class="info">等级: 一级</span> <span class="info">类别: 白案</span> <span class="author">赵四</span> </p> 
-                </div> 
-            </router-link> 
-        </div>
-        <div class="tasklist-item"> 
-            <router-link :to="{name: 'tips'}"> 
-                <img alt="" src="../../../assets/images/photo-1471347334704-25603ca7d537.jpg" /> 
-                <div class="tasklist-cover"> 
-                    <h3>任务标题</h3> 
-                    <p class="tips clearfix"> <span class="info">等级: 一级</span> <span class="info">类别: 白案</span> <span class="author">赵四</span> </p> 
+                    <h3>{{item.title}}</h3> 
+                    <p class="tips clearfix"> <span class="info">等级: {{$route.query.tasklev}}</span> <span class="info">类别: {{$route.query.tasktype}}</span> <span class="author">{{item.author}}</span> </p> 
                 </div> 
             </router-link> 
         </div>
@@ -46,10 +19,43 @@
 
 <script>
     import Loadmore from '../../../components/loadmore/loadmore.vue'
+    import {ajax} from '../../../config/ajax'
 
     export default {
         components: {
             Loadmore
+        },
+        data () {
+            return {
+                tasklist: []
+            }
+        },
+        created () {
+            this.initData()
+        },
+        methods: {
+            async initData () {
+                let self = this
+                // 获取通知公告
+                ajax({
+                api: 'task',
+                params: {
+                    type: 'getTaskList',
+                    tasktype: self.$route.query.id,
+                    tasklev: self.$route.query.tasklev,
+                    limit: 0
+                }
+                })
+                .then(function(res){
+                if(!res.data.errcode){
+                    self.tasklist = res.data.data
+                    self.$store.dispatch('hideLoading')
+                }
+                })
+                .catch(function(err){
+                    console.log(err);
+                })
+            } 
         }
     }
 </script>

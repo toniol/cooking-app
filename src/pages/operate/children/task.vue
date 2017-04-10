@@ -8,7 +8,7 @@
       <div class="item item-borderless item-icon-right thin-border">
         <div class="hairline-top"></div>
         <div class="hairline-bottom"></div>
-        <span class="von-badge" v-for="item in yclArray"><div class="von-badge-num">{{item}}</div></span>
+        <span class="von-badge" v-for="item in materials"><div class="von-badge-num">{{item}}</div></span>
         <!-- <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i> -->
       </div>
 
@@ -19,7 +19,7 @@
       <div class="item item-borderless item-icon-right thin-border">
         <div class="hairline-top"></div>
         <div class="hairline-bottom"></div>
-        <span class="von-badge" v-for="item in twlArray"><div class="von-badge-num">{{item}}</div></span>
+        <span class="von-badge" v-for="item in flavorings"><div class="von-badge-num">{{item}}</div></span>
         <!-- <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i> -->
       </div>
 
@@ -30,7 +30,7 @@
       <div class="item item-borderless item-icon-right thin-border">
         <div class="hairline-top"></div>
         <div class="hairline-bottom"></div>
-        <span class="von-badge" v-for="item in toolsArray"><div class="von-badge-num">{{item}}</div></span>
+        <span class="von-badge" v-for="item in tools"><div class="von-badge-num">{{item}}</div></span>
         <!-- <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i> -->
       </div>
 
@@ -44,70 +44,99 @@
         <c-textarea placeholder="请填写详细步骤" :rows="6" :showCounter="false" v-model="content"></c-textarea>
       </div>
       <br>
+      <div class="padding">
+        <md-button class="md-button button button-positive button-block" @click.native="clicked()">
+          提交任务
+        </md-button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
     import CTextarea from '../../../components/cTextarea/c-textarea.vue'
-    // import yclModal from './modal/yclModal'
-    // import twlModal from './modal/twlModal'
-    // import toolsModal from './modal/toolsModal'
+    import { ajax } from '../../../config/ajax'
+    import { getSess, setSess } from '../../../utils'
 
     export default {
-        data () {
-            return {
-                content: '',
-                yclArray: ["土豆", "鸡块", "青椒", "红椒", "洋葱"], // 原材料数据
-                twlArray: ["盐", "酱油", "醋", "胡椒粉", "咖喱", "辣椒", "耗油", "淀粉"], // 调味料数据
-                toolsArray: ["刀", "铲子", "勺子", "剪刀"] // 工具数据
-                // yclModal: undefined,
-                // twlModal: undefined,
-                // toolsModal: undefined
+      data () {
+          return {
+              content: '',
+              materials: [], // 原材料数据
+              flavorings: [], // 调味料数据
+              tools: [] // 工具数据
+          }
+      },
+      components: {
+          CTextarea 
+      },
+      created () {
+          this.initData()
+      },
+      methods: {
+        async initData () {
+            let self = this
+            // 获取通知公告
+            ajax({
+              api: 'task',
+              params: {
+                type: 'getTaskCon',
+                id: self.$route.query.id
+              }
+            })
+            .then(function(res){
+              if(!res.data.errcode){
+                  self.materials = res.data.data[0].material.split('，')
+                  self.flavorings = res.data.data[0].flavoring.split('，')
+                  self.tools = res.data.data[0].tools.split('，')
+                  self.$store.dispatch('hideLoading')
+              }
+            })
+            .catch(function(err){
+                console.log(err);
+            })
+        },
+        clicked () {
+          let self = this
+          let userinfo = getSess('userinfo')
+
+          ajax({
+            api: 'task',
+            method: 'post',
+            params: {
+              type: 'taskCommit',
+              taskid: self.$route.query.id,
+              userid: userinfo.id,
+              step: self.content
             }
-        },
-        components: {
-           CTextarea 
-        },
-        mounted() {
-            // $modal.fromComponent(yclModal, {
-            //     title: '选择原材料',
-            //     theme: 'default'
-            // }).then((modal) => {
-            //     this.yclModal = modal
-            // })
-            // $modal.fromComponent(twlModal, {
-            //     title: '选择调味料',
-            //     theme: 'default'
-            // }).then((modal) => {
-            //     this.twlModal = modal
-            // })
-            // $modal.fromComponent(toolsModal, {
-            //     title: '选择工具',
-            //     theme: 'default'
-            // }).then((modal) => {
-            //     this.toolsModal = modal
-            // })
-        },
-        destroyed() {
-            // if (this.yclModal)
-            //     $modal.destroy(this.yclModal)
-            // if (this.twlModal)
-            //     $modal.destroy(this.twlModal)
-            // if (this.toolsModal)
-            //     $modal.destroy(this.toolsModal)
-        },
-        methods: {
-            // showYclModal() {
-            //     this.yclModal.show()
-            // },
-            // showTwlModal() {
-            //     this.twlModal.show()
-            // },
-            // showToolsModal() {
-            //     this.toolsModal.show()
-            // }
+          })
+          .then(function(res){
+            if(!res.data.errcode){
+              $dialog.alert({
+                // 标题
+                title: '提示', 
+                // 内容
+                content: '任务提交成功',
+                // 按钮文本
+                okText: '确定'
+              })
+              self.$store.dispatch('hideLoading')
+            } else {
+              $dialog.alert({
+                // 标题
+                title: '提示', 
+                // 内容
+                content: '[' + res.data.errcode + '] ' + res.data.errmsg,
+                // 按钮文本
+                okText: '确定'
+              })
+            }
+          })
+          .catch(function(err){
+              console.log(err);
+          })
         }
+      }
     }
 </script>
 
