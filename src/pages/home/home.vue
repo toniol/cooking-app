@@ -42,7 +42,7 @@
 
       <list class="list-ios">
         <item>
-          <h2>通知动态</h2>
+          <h2>通知公告</h2>
         </item>
         <item v-for="item in tongzhi" :id="item.id" class="item-avatar item-ios">
           <router-link :to="{name: 'newsDetail', query: {id: item.id}}">

@@ -46,7 +46,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .article {
     padding: 20px;
     background-color: #fff;
