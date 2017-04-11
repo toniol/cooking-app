@@ -161,6 +161,10 @@
     line-height: 22px;
     margin-bottom: 6px;
     color: #444;
+    white-space: nowrap;
+    word-wrap: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .item-ios.item-avatar .item-note,
   .list-ios>.item.item-avatar .item-note  {
