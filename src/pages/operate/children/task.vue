@@ -8,7 +8,8 @@
       <div class="item item-borderless item-icon-right thin-border">
         <div class="hairline-top"></div>
         <div class="hairline-bottom"></div>
-        <span class="von-badge" v-for="item in materials"><div class="von-badge-num">{{item}}</div></span>
+        <span>{{materials}}</span>
+        <!-- <span class="von-badge" v-for="item in materials"><div class="von-badge-num">{{item}}</div></span> -->
         <!-- <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i> -->
       </div>
 
@@ -19,7 +20,8 @@
       <div class="item item-borderless item-icon-right thin-border">
         <div class="hairline-top"></div>
         <div class="hairline-bottom"></div>
-        <span class="von-badge" v-for="item in flavorings"><div class="von-badge-num">{{item}}</div></span>
+        <span>{{flavorings}}</span>
+        <!-- <span class="von-badge" v-for="item in flavorings"><div class="von-badge-num">{{item}}</div></span> -->
         <!-- <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i> -->
       </div>
 
@@ -30,7 +32,8 @@
       <div class="item item-borderless item-icon-right thin-border">
         <div class="hairline-top"></div>
         <div class="hairline-bottom"></div>
-        <span class="von-badge" v-for="item in tools"><div class="von-badge-num">{{item}}</div></span>
+        <span>{{tools}}</span>
+        <!-- <span class="von-badge" v-for="item in tools"><div class="von-badge-num">{{item}}</div></span> -->
         <!-- <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i> -->
       </div>
 
@@ -62,9 +65,9 @@
       data () {
           return {
               content: '',
-              materials: [], // 原材料数据
-              flavorings: [], // 调味料数据
-              tools: [] // 工具数据
+              materials: '', // 原材料数据
+              flavorings: '', // 调味料数据
+              tools: '' // 工具数据
           }
       },
       components: {
@@ -86,9 +89,9 @@
             })
             .then(function(res){
               if(!res.data.errcode){
-                  self.materials = res.data.data[0].material.split('，')
-                  self.flavorings = res.data.data[0].flavoring.split('，')
-                  self.tools = res.data.data[0].tools.split('，')
+                  self.materials = res.data.data[0].material
+                  self.flavorings = res.data.data[0].flavoring
+                  self.tools = res.data.data[0].tools
                   self.$store.dispatch('hideLoading')
               }
             })

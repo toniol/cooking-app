@@ -5,7 +5,7 @@ module.exports = {
   entry: './src/main.js',
   output: {
     path: path.resolve(__dirname, './dist'),
-    publicPath: './dist/',
+    publicPath: '/dist/',
     filename: 'build.js'
   },
   module: {
@@ -29,7 +29,7 @@ module.exports = {
         loader: 'style-loader!css-loader!sass-loader'
       },
       {
-        test: /\.(png|jpg|gif|svg)|((eot|woff|ttf|svg)[\?]?.*)$/,
+        test: /\.(mp4|png|jpg|gif|svg)|((eot|woff|ttf|svg)[\?]?.*)$/,
         loader: 'url-loader',
         query: {
           limit: 10000,
