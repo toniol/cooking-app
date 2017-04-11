@@ -35,8 +35,10 @@ export const ajax = (config) => {
       }
 
       data.data.forEach(function(el) {
-        if(el.picurl){
+        if(el.picurl && (el.picurl.length !== 16)){
           el.picurl = imgBaseUrl + el.picurl
+        } else {
+          el.picurl = require('../assets/images/cooking_icon.png')
         }
 
         if(el.videourl){

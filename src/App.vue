@@ -35,13 +35,13 @@
             text: '模拟操作',
             path: '/operate'
           },
-          {
-              iconOn: 'ion-ios-chatboxes',
-              iconOff: 'ion-ios-chatboxes-outline',
-              text: '互动交流',
-              path: '/topic',
-              badge: '5'
-          },
+          // {
+          //     iconOn: 'ion-ios-chatboxes',
+          //     iconOff: 'ion-ios-chatboxes-outline',
+          //     text: '互动交流',
+          //     path: '/topic',
+          //     badge: '5'
+          // },
           {
             iconOn: 'ion-ios-person',
             iconOff: 'ion-ios-person-outline',

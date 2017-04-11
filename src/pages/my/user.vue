@@ -8,6 +8,7 @@
         </div>
       </blur>
 
+      <!--
       <list>
         <item class="item-icon-left item-icon-right">
           修改密码
@@ -20,6 +21,7 @@
           <i class="icon ion-ios-arrow-right"></i>
         </item>
       </list>
+      -->
 
       <br>
       <br>
