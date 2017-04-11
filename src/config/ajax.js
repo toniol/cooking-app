@@ -2,14 +2,13 @@
 import axios from 'axios'
 import Qs from 'qs'
 import store from '../store/store'
+import { host, imgBaseUrl } from './env'
+
+const baseURL = host + '/app/ajax/'
+const suffix = '.ashx'
 
 // 创建一个axios实例导出，并且自定义其配置
 export const ajax = (config) => {
-
-  const host = 'http://10.1.80.229' // 测试地址
-  // const host = 'http://120.26.205.75:8015'  // 线上地址
-  const baseURL = host + '/app/ajax/'
-  const suffix = '.ashx'
 
   return axios({
     //`url`是请求的服务器地址
@@ -37,11 +36,11 @@ export const ajax = (config) => {
 
       data.data.forEach(function(el) {
         if(el.picurl){
-          el.picurl = host + el.picurl
+          el.picurl = imgBaseUrl + el.picurl
         }
 
         if(el.videourl){
-          el.videourl = host + el.videourl
+          el.videourl = imgBaseUrl + el.videourl
         }
       }, this)
       store.dispatch('hideLoading')

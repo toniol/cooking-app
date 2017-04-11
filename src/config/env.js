@@ -6,20 +6,23 @@
  * imgBaseUrl: 图片所在域名地址
  * 
  */
-let baseUrl; 
-let routerMode;
-const imgBaseUrl = '';
+
+let host
+let routerMode
+let imgBaseUrl = ''	//图片视频资源文件地址，方便做CDN
 
 if (process.env.NODE_ENV == 'development') {
-	baseUrl = '';
+	host = 'http://10.1.80.229' // 开发环境地址
 	routerMode = 'hash'
-}else{
-	baseUrl = 'http://120.26.205.75:8899/cooking';
+	imgBaseUrl = 'http://10.1.80.229'
+} else {
+	host = 'http://120.26.205.75:8015' // 线上地址
 	routerMode = 'hash'
+	imgBaseUrl = 'http://120.26.205.75:8015'
 }
 
 export {
-	baseUrl,
+	host,
 	routerMode,
 	imgBaseUrl
-}
+} 
