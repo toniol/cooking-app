@@ -1,38 +1,42 @@
 <template>
   <div class="page has-navbar has-tabbar" v-nav="{ title: '视频教学' }" v-tabbar-menu-index="1">
     <div class="page-content">
-    <div class="list list-ios" style="padding-left: 5px;">
-      <flexbox :gutter="0" wrap="wrap">
-        <flexbox-item v-for="item in videoList" :span="1/2">
-          <router-link :to="{name: 'play', query: {id: item.id}}">
-            <div class="videoBox"> 
-              <div class="cover"> 
-                <img alt="" :src="item.picurl"> 
-                <span class="label">&nbsp;&nbsp;{{item.releasetime}}</span> 
-              </div> 
-              <p class="title">{{item.title}}</p> 
-            </div>
-          </router-link>
-        </flexbox-item>
-      </flexbox>
+      <div class="list list-ios" style="padding-left: 5px;">
+        <flexbox :gutter="0" wrap="wrap">
+          <flexbox-item v-for="item in videoList" :span="1/2">
+            <router-link :to="{name: 'play', query: {id: item.id}}">
+              <div class="videoBox"> 
+                <div class="cover"> 
+                  <img alt="" :src="item.picurl"> 
+                  <span class="label">&nbsp;&nbsp;{{item.releasetime}}</span> 
+                </div> 
+                <p class="title">{{item.title}}</p> 
+              </div>
+            </router-link>
+          </flexbox-item>
+        </flexbox>
       </div>
+      <loadmore type="line" text="·暂无数据·" v-if="nodata"></loadmore>
     </div>
   </div>
 </template>
 
 <script>
   import { Flexbox, FlexboxItem } from '../../components/flexbox/index.vue'
+  import Loadmore from '../../components/loadmore/loadmore.vue'
   import { ajax } from '../../config/ajax'
 
   export default {
     data () {
       return {
-        videoList: []
+        videoList: [],
+        nodata: false
       }
     },
     components: {
       Flexbox,
-      FlexboxItem
+      FlexboxItem,
+      Loadmore
     },
     created () {
       this.initData()
@@ -51,6 +55,9 @@
         .then(function(res){
           if(!res.data.errcode){
             self.videoList = res.data.data
+            if(self.videoList.length === 0){
+              self.nodata = true
+            }
             self.$store.dispatch('hideLoading')
           }
         })

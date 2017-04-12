@@ -10,17 +10,24 @@
           </router-link>
         </item>
       </list>
+
+      <loadmore type="line" text="·暂无数据·" v-if="nodata"></loadmore>
     </div>
   </div>
 </template>
 
 <script>
   import { ajax } from '../../../config/ajax'
+  import Loadmore from '../../../components/loadmore/loadmore.vue'
 
   export default {
+    components: {
+      Loadmore
+    },
     data () {
       return {
-        zhuanyeList: []
+        zhuanyeList: [],
+        nodata: false
       }
     },
     created () {
@@ -40,6 +47,9 @@
         .then(function(res){
           if(!res.data.errcode){
             self.zhuanyeList = res.data.data
+            if(self.zhuanyeList.length === 0){
+              self.nodata = true
+            }
           }
         })
         .catch(function(err){
@@ -49,7 +59,3 @@
     }
   }
 </script>
-
-<style lang="scss">
-  
-</style>

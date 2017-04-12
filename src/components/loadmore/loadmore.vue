@@ -44,7 +44,7 @@ export default {
         position: relative;
         top: -.9em;
         padding: 0 .55em;
-        background-color: #fff;
+        background-color: #f5f5f5;
         color: #999
     }
 

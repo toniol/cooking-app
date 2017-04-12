@@ -12,7 +12,7 @@
             </router-link> 
         </div>
       </div>
-      <loadmore type="line" text="烹饪是一门艺术"></loadmore>
+      <loadmore type="line" :text="loadmore"></loadmore>
     </div>
   </div>
 </template>
@@ -27,7 +27,8 @@
         },
         data () {
             return {
-                tasklist: []
+                tasklist: [],
+                loadmore: '烹饪是一门艺术'
             }
         },
         created () {
@@ -38,17 +39,20 @@
                 let self = this
                 // 获取通知公告
                 ajax({
-                api: 'task',
-                params: {
-                    type: 'getTaskList',
-                    tasktype: self.$route.query.id,
-                    tasklev: self.$route.query.tasklev,
-                    limit: 0
-                }
+                    api: 'task',
+                    params: {
+                        type: 'getTaskList',
+                        tasktype: self.$route.query.id,
+                        tasklev: self.$route.query.tasklev,
+                        limit: 0
+                    }
                 })
                 .then(function(res){
                 if(!res.data.errcode){
                     self.tasklist = res.data.data
+                    if(self.tasklist.length === 0){
+                        self.loadmore = '·暂无数据·'
+                    }
                     self.$store.dispatch('hideLoading')
                 }
                 })
@@ -61,9 +65,6 @@
 </script>
 
 <style lang="scss" scoped>
-    .page-content {
-      background-color: #fff;
-    }
     .tasklist {
         padding: 10px;
         background: #fff
