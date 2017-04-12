@@ -35,6 +35,14 @@ module.exports = {
           limit: 10000,
           name: '[name].[ext]?[hash]'
         }
+      },
+      {
+        test: /vonic.src.*?js$/,
+        loader: 'babel-loader'
+      },
+      {
+        test: /vue\-scroller.src.*?js$/,
+        loader: 'babel-loader'
       }
     ]
   },
