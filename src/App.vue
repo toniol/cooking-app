@@ -78,6 +78,9 @@
   a {
     text-decoration: none;
   }
+  [class*=list]:empty {
+    display: none;
+  }
   .navbar {
     z-index: 12;
   }
