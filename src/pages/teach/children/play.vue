@@ -5,7 +5,11 @@
         <h3>{{detail.title}}</h3>
         <p><span class="date">{{detail.releasetime}}</span><span class="author">{{detail.author}}</span></p>
         
-        <video controls="" autoplay="" name="media"><source :src="detail.videourl" type="video/mp4"></video>
+        <video :src="src" :poster="poster" width="100%" height="auto" controls="controls">
+          Your browser does not support the video tag.
+        </video>
+        <br>
+        <p>{{detail.content}}</p>
       </div>
     </div>
   </div>
@@ -17,7 +21,9 @@
   export default {
     data () {
       return {
-        detail: {}
+        detail: {},
+        src: '',
+        poster: ''
       }
     },
     created () {
@@ -37,10 +43,11 @@
         .then(function(res){
           if(!res.data.errcode){
             self.detail = res.data.data[0]
+            self.src = self.detail.videourl
           }
         })
         .catch(function(err){
-
+          console.log(err)
         })
       }
     }  
