@@ -81,6 +81,9 @@
   [class*=list]:empty {
     display: none;
   }
+  [class*=list]:empty + .loadmore {
+      margin-top: 89px;
+  }
   .navbar {
     z-index: 12;
   }
