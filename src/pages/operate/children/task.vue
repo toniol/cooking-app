@@ -79,12 +79,11 @@
       methods: {
         async initData () {
             let self = this
-            // 获取通知公告
             ajax({
               api: 'task',
               params: {
                 type: 'getTaskCon',
-                id: self.$route.query.id
+                id: self.$route.query.taskid
               }
             })
             .then(function(res){

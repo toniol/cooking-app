@@ -32,7 +32,7 @@
           api: 'task',
           params: {
               type: 'getTaskCon',
-              id: self.$route.query.id
+              id: self.$route.query.taskid
           }
           })
           .then(function(res){

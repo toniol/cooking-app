@@ -19,7 +19,7 @@ export default [{
             component: r => require.ensure([], () => r(require('./pages/login/login.vue')), 'login')
         },
         {
-            path: 'home', 
+            path: 'home',
             name: 'home',
             meta: {
                 auth: true
@@ -44,7 +44,7 @@ export default [{
         },
         {
             path: 'teach',
-            name: 'teach', 
+            name: 'teach',
             meta: {
                 auth: true
             },
@@ -61,7 +61,7 @@ export default [{
         },
         {
             path: 'operate',
-            name: 'operate', 
+            name: 'operate',
             meta: {
                 auth: true
             },
@@ -75,6 +75,15 @@ export default [{
                 auth: true
             },
             component: r => require.ensure([], () => r(require('./pages/operate/children/taskList.vue')), 'taskList')
+        },
+        {
+            path: 'operate/classTaskList',
+            name: 'classtasklist',
+            meta: {
+                hideTabbar: true,
+                auth: true
+            },
+            component: r => require.ensure([], () => r(require('./pages/operate/children/classTaskList.vue')), 'classtasklist')
         },
         {
             path: 'operate/tips',
@@ -102,15 +111,15 @@ export default [{
             component: r => require.ensure([], () => r(require('./pages/topic/topic.vue')), 'topic')
         },
         {
-            path: 'user', 
+            path: 'user',
             meta: {
                 auth: true
             },
             component: r => require.ensure([], () => r(require('./pages/my/user.vue')), 'user')
         },
-        { 
-            path: '*', 
-            redirect: 'home' 
+        {
+            path: '*',
+            redirect: 'home'
         }
     ]
 }]
