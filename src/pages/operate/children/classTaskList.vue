@@ -159,12 +159,6 @@ export default {
                 // console.log(buttonIndex)
             })
         }
-    },
-    destroyed() {
-        let userinfo = this.$store.state.userinfo
-        if(userinfo.type === '教师'){
-            $actionSheet.hide()
-        }
     }
 }
 </script>
