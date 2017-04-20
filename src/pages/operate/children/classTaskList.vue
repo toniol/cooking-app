@@ -112,7 +112,6 @@ export default {
             }).then(function (res) {
                 if (!res.data.errcode) {
                     self.tasklist = res.data.data
-                    console.log(self.tasklist.length)
                     if (self.tasklist.length === 0) {
                         self.showloadmore = true
                     } else {
