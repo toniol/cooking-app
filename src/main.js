@@ -13,7 +13,7 @@ Vonic.app.setConfig('beforeEach', (to, from, next) => {
     } else {
         // $tabbar.$emit('showTabbar')
     }
-    
+
     store.dispatch('showLoading')
 
     if (to.matched.some(record => record.meta.auth)) {
@@ -25,8 +25,10 @@ Vonic.app.setConfig('beforeEach', (to, from, next) => {
                 path: '/login',
                 query: { redirect: to.fullPath }
             })
+            store.commit('REMOVE_USERINFO')
             store.dispatch('hideLoading')
         } else {
+            store.commit('SAVED_USERINFO', userinfo)
             next()
         }
     } else {
@@ -38,4 +40,3 @@ Vue.use(Vonic.app, {
     routes,
     store
 })
-

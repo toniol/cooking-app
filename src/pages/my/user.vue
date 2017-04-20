@@ -59,6 +59,7 @@
     methods: {
       logout () {
         removeSess('userinfo')
+        this.$store.commit('REMOVE_USERINFO')
         $router.push({name: 'login'})
       }
     }

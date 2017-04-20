@@ -3,14 +3,16 @@
          v-nav="{ title: '已完成任务', showBackButton: true }"
          v-tabbar-menu-index="2">
         <div class="page-content">
-            <div class="item item-divider">
-                选择班级
+            <div v-if="isteacher">
+                <div class="item item-divider">
+                    选择班级
+                </div>
+                <item class="item-icon-right"
+                      @click.native="showActionSheet('weixin')">
+                    选择班级
+                    <i class="icon ion-ios-arrow-right"></i>
+                </item>
             </div>
-            <item class="item-icon-right"
-                  @click.native="showActionSheet('weixin')">
-                选择班级<span class="item-note"></span>
-                <i class="icon ion-ios-arrow-right"></i>
-            </item>
     
             <div class="item item-divider">
                 学生列表
@@ -20,7 +22,7 @@
                 <item v-for="item in tasklist"
                       class="item-icon-left item-icon-right"
                       @click.native="scandetail(item)">
-                    {{item.username}}
+                    {{item.username}}<span class="item-note">{{item.fenshu}} 分</span>
                     <i class="icon ion-ios-person-outline"></i>
                     <i class="icon ion-ios-arrow-right"></i>
                 </item>
@@ -45,7 +47,8 @@ export default {
         return {
             classList: [],
             tasklist: [],
-            showloadmore: false
+            showloadmore: false,
+            isteacher: false
         }
     },
     created() {
@@ -53,8 +56,15 @@ export default {
     },
     methods: {
         async initData() {
-            await this.getClass()
-            await this.getTaskList(this.classList.id)
+            let userinfo = this.$store.state.userinfo
+
+            if(userinfo.type === '教师'){
+                this.isteacher = true
+                await this.getClass()
+                await this.getTaskList(this.classList.id)
+            } else {
+                await this.getTaskList(userinfo.classid)
+            }
 
             this.$store.dispatch('hideLoading')
         },
@@ -79,16 +89,30 @@ export default {
         getTaskList(classid) {
             let self = this
             let taskid = this.$route.query.taskid
-            ajax({
-                api: 'task',
-                params: {
+            let userinfo = this.$store.state.userinfo
+            let type = ''
+            let params = {}
+
+            if(userinfo.type === '教师'){
+                params = {
                     type: 'teacherGetTaskCommitList',
                     taskid: taskid,
                     classid: classid
                 }
+            } else {
+                params = {
+                    type: 'studentGetTaskCommitList',
+                    taskid: taskid,
+                    userid: userinfo.id
+                }
+            }
+            ajax({
+                api: 'task',
+                params: params
             }).then(function (res) {
                 if (!res.data.errcode) {
                     self.tasklist = res.data.data
+                    console.log(self.tasklist.length)
                     if (self.tasklist.length === 0) {
                         self.showloadmore = true
                     } else {
@@ -134,6 +158,12 @@ export default {
             popup.show().then((buttonIndex) => {
                 // console.log(buttonIndex)
             })
+        }
+    },
+    destroyed() {
+        let userinfo = this.$store.state.userinfo
+        if(userinfo.type === '教师'){
+            $actionSheet.hide()
         }
     }
 }

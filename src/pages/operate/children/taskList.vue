@@ -6,32 +6,40 @@
             <tabs :tab-items="tabs"
                   :tab-index="tabIndex"
                   :on-tab-click="onTabClick"></tabs>
-            <div class="tasklist">
-                <div class="tasklist-item"
-                     v-for="item in taskingList"
-                     v-show="showtasking" @click="gotoTasking(item)">
-                    <!--<router-link :to="{name: 'tips', query: {id: item.id}}">-->
+            <transition name="fade">
+                <div class="tasklist"
+                     v-if="showtasking">
+                    <div class="tasklist-item"
+                         v-for="item in taskingList"
+                         @click="gotoTasking(item)">
+                        <!--<router-link :to="{name: 'tips', query: {id: item.id}}">-->
                         <img alt=""
                              :src="item.picurl" />
                         <div class="tasklist-cover">
                             <h3>{{item.title}}</h3>
                             <p class="tips clearfix"> <span class="info">等级: {{$route.query.tasklev}}</span> <span class="info">类别: {{$route.query.tasktype}}</span> <span class="author">{{item.author}}</span> </p>
                         </div>
-                    <!--</router-link>-->
+                        <!--</router-link>-->
+                    </div>
                 </div>
-                <div class="tasklist-item"
-                     v-for="item in taskedList"
-                     v-show="showtasked" @click="gotoTasked(item)">
-                    <!--<router-link :to="{name: 'tips', query: {id: item.id}}">-->
+            </transition>
+            <transition name="fade">
+                <div class="tasklist"
+                     v-if="showtasked">
+                    <div class="tasklist-item"
+                         v-for="item in taskedList"
+                         @click="gotoTasked(item)">
+                        <!--<router-link :to="{name: 'tips', query: {id: item.id}}">-->
                         <img alt=""
                              :src="item.picurl" />
                         <div class="tasklist-cover">
                             <h3>{{item.title}}</h3>
                             <p class="tips clearfix"> <span class="info">等级: {{$route.query.tasklev}}</span> <span class="info">类别: {{$route.query.tasktype}}</span> <span class="author">{{item.author}}</span> </p>
                         </div>
-                    <!--</router-link>-->
+                        <!--</router-link>-->
+                    </div>
                 </div>
-            </div>
+            </transition>
             <loadmore type="line"
                       :text="loadmore"></loadmore>
         </div>
@@ -41,7 +49,6 @@
 <script>
 import Loadmore from '../../../components/loadmore/loadmore.vue'
 import { ajax } from '../../../config/ajax'
-import { getSess } from '../../../utils'
 
 export default {
     components: {
@@ -63,48 +70,44 @@ export default {
         this.initData()
     },
     methods: {
-        gotoTasking(item){
-            let userinfo = getSess('userinfo')
-            if(userinfo.type === '教师'){
-                $router.push({name: 'task', query: {taskid: item.id}})
+        gotoTasking(item) {
+            let userinfo = this.$store.state.userinfo
+            if (userinfo.type === '教师') {
+                $router.push({ name: 'task', query: { taskid: item.id } })
             } else {
-                $router.push({name: 'tips', query: {taskid: item.id}})
+                $router.push({ name: 'tips', query: { taskid: item.id } })
             }
         },
-        gotoTasked (item) {
-            let userinfo = getSess('userinfo')
-            if(userinfo.type === '教师'){
-                $router.push({name: 'classtasklist', query: {taskid: item.id}})
-            } else {
-                // $router.push({name: 'tips', query: {taskid: item.id}})
-            }
+        gotoTasked(item) {
+            $router.push({ name: 'classtasklist', query: { taskid: item.id } })
         },
         onTabClick(index) {
             this.tabIndex = index
             if (this.tabIndex === 1) {
                 this.showtasking = false
                 this.showtasked = true
+
+                if (this.taskedList.length === 0) {
+                    this.loadmore = '·暂无数据·'
+                } else {
+                    this.loadmore = '烹饪是一门艺术'
+                }
             } else {
                 this.showtasking = true
                 this.showtasked = false
-            }
 
-            if (this.taskingList.length === 0) {
-                this.loadmore = '·暂无数据·'
-            } else {
-                this.loadmore = '烹饪是一门艺术'
-            }
-            if (this.taskedList.length === 0) {
-                this.loadmore = '·暂无数据·'
-            } else {
-                this.loadmore = '烹饪是一门艺术'
+                if (this.taskingList.length === 0) {
+                    this.loadmore = '·暂无数据·'
+                } else {
+                    this.loadmore = '烹饪是一门艺术'
+                }
             }
         },
         async initData() {
-            let userinfo = getSess('userinfo')
+            let userinfo = this.$store.state.userinfo
             let usertype = userinfo.type
             let userid = userinfo.id
-            if(usertype === '教师'){
+            if (usertype === '教师') {
                 usertype = 'teacher'
             } else {
                 usertype = 'student'
@@ -125,7 +128,7 @@ export default {
                 if (!res.data.errcode) {
                     self.tasklist = res.data.data
                     self.tasklist.forEach(function (el) {
-                        if (el.isOpen === '开启') {
+                        if (el.isopen === '开启') {
                             self.taskingList.push(el)
                         } else {
                             self.taskedList.push(el)
@@ -204,5 +207,15 @@ export default {
 
 .tasklist .tasklist-item .tasklist-cover .tips .author {
     float: right
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity .3s
+}
+
+.fade-enter,
+.fade-leave-active {
+    opacity: 0
 }
 </style>
