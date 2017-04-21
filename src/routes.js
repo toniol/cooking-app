@@ -104,6 +104,15 @@ export default [{
             component: r => require.ensure([], () => r(require('./pages/operate/children/task.vue')), 'task')
         },
         {
+            path: 'operate/comment',
+            name: 'comment',
+            meta: {
+                hideTabbar: true,
+                auth: true
+            },
+            component: r => require.ensure([], () => r(require('./pages/operate/children/comment.vue')), 'comment')
+        },
+        {
             path: 'topic',
             meta: {
                 auth: true
