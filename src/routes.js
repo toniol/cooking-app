@@ -113,6 +113,15 @@ export default [{
             component: r => require.ensure([], () => r(require('./pages/operate/children/comment.vue')), 'comment')
         },
         {
+            path: 'operate/peicai',
+            name: 'peicai',
+            meta: {
+                hideTabbar: true,
+                auth: true
+            },
+            component: r => require.ensure([], () => r(require('./pages/operate/children/peicai.vue')), 'peicai')
+        },
+        {
             path: 'topic',
             meta: {
                 auth: true

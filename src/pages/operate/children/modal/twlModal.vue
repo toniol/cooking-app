@@ -1,21 +1,17 @@
 <template>
-    <div class="page-content padding padding-top">
-        <task-tag :dynamicTags="dynamicTags" :buttonText="buttonText"></task-tag>
+    <div class="page-content padding-top">
+        <von-checkbox :options="topics" v-model="chosenTopics" theme="positive"></von-checkbox>
+        <p>{{ chosenTopics }}</p>
     </div>
 </template>
 
 <script>
-    import TaskTag from '../../../../components/taskTag/taskTag'
-
     export default {
         data() {
             return {
-                dynamicTags: ["盐", "酱油", "醋", "胡椒粉", "咖喱", "辣椒"],
-                buttonText: '+ 新增调味料'
+                chosenTopics: [],
+                topics: ["调味料1", "调味料2", "调味料3", "调味料4", "调味料5"],
             }
-        },
-        components: {
-            TaskTag
         }
     }
 </script>

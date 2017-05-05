@@ -94,11 +94,15 @@ a {
 }
 
 .navbar {
-    z-index: 12;
+    z-index: 3;
 }
 
 .page-content {
-    z-index: 11;
+    z-index: 2;
+}
+
+.tabbar {
+    z-index: 1;
 }
 
 .tabbar::before {

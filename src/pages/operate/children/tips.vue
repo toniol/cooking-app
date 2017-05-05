@@ -5,10 +5,15 @@
         <div class="page-content">
             <div class="padding">
                 <div v-html="info.content"></div>
-    
+                
+                <md-button class="md-button button button-positive button-block"
+                           @click.native="peicai()">
+                    配 菜
+                </md-button>
+
                 <md-button class="md-button button button-positive button-block"
                            @click.native="clicked()">
-                    进入任务
+                    步 骤
                 </md-button>
             </div>
         </div>
@@ -47,6 +52,9 @@ export default {
         },
         clicked() {
             $router.push({ name: 'task', query: { taskid: this.$route.query.taskid } })
+        },
+        peicai(){
+            $router.push({ name: 'peicai', query: { taskid: this.$route.query.taskid } })
         }
     }
 }
