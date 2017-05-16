@@ -56,6 +56,7 @@ export default {
 <style lang="scss">
     .c-textarea {
         display: block;
+        padding: 5px;
         border: 0;
         resize: none;
         width: 100%;
