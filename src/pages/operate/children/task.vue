@@ -4,42 +4,7 @@
          v-tabbar-menu-index="2">
         <div class="page-content">
             <br>
-            <h2 class="item item-divider">
-                            原材料
-                          </h2>
-            <div class="item item-borderless item-icon-right thin-border">
-                <div class="hairline-top"></div>
-                <div class="hairline-bottom"></div>
-                <span>{{materials}}</span>
-                <!-- <span class="von-badge" v-for="item in materials"><div class="von-badge-num">{{item}}</div></span> -->
-                <!-- <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i> -->
-            </div>
-    
-            <br>
-            <h2 class="item item-divider">
-                            调味料
-                          </h2>
-            <div class="item item-borderless item-icon-right thin-border">
-                <div class="hairline-top"></div>
-                <div class="hairline-bottom"></div>
-                <span>{{flavorings}}</span>
-                <!-- <span class="von-badge" v-for="item in flavorings"><div class="von-badge-num">{{item}}</div></span> -->
-                <!-- <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i> -->
-            </div>
-    
-            <br>
-            <h2 class="item item-divider">
-                            工具
-                          </h2>
-            <div class="item item-borderless item-icon-right thin-border">
-                <div class="hairline-top"></div>
-                <div class="hairline-bottom"></div>
-                <span>{{tools}}</span>
-                <!-- <span class="von-badge" v-for="item in tools"><div class="von-badge-num">{{item}}</div></span> -->
-                <!-- <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i> -->
-            </div>
-    
-            <br>
+           
             <h2 class="item item-divider">
                             做法步骤
                           </h2>
@@ -49,6 +14,7 @@
                 <c-textarea placeholder="请填写详细步骤"
                             :rows="6"
                             :showCounter="false"
+                            :readonly="readonly"
                             v-model="content"></c-textarea>
             </div>
             <br>
@@ -70,7 +36,9 @@ export default {
     data() {
         return {
             isshow: true,
+            readonly: false,
             content: '',
+            wendu: '',
             materials: '', // 原材料数据
             flavorings: '', // 调味料数据
             tools: '' // 工具数据
@@ -84,12 +52,13 @@ export default {
 
         if(userinfo.type === '教师'){
             this.isshow = false
+            this.readonly = true
         }
         this.initData()
     },
     methods: {
         async initData() {
-            await this.getTaskCon()
+            // await this.getTaskCon()
             await this.getTaskCommit()
 
             this.$store.dispatch('hideLoading')

@@ -30,11 +30,18 @@
                     <i class="icon ion-ios-arrow-right"></i>
                 </item>
             </list>
+            <div class="padding">
+                <md-button v-if="isshow" class="md-button button button-positive button-block"
+                           @click.native="cimmit()">
+                    提交配菜数据
+                </md-button>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+    import { ajax } from '../../../config/ajax'
     import zlModal from './modal/zlModal'
     import flModal from './modal/flModal'
     import twlModal from './modal/twlModal'
@@ -44,6 +51,7 @@
     export default {
         data(){
             return {
+                isshow: true,
                 zlmodal: undefined,
                 flmodal: undefined,
                 twlmodal: undefined,
@@ -52,9 +60,14 @@
             }
         },
         created() {
-            this.$store.dispatch('hideLoading')
+            let userinfo = this.$store.state.userinfo
+
+            if(userinfo.type === '教师'){
+                this.isshow = false
+            }
+            this.initData()
         },
-        mounted() {
+        mounted () {
             $modal.fromComponent(zlModal, {
                 title: '选择主料',
                 theme: 'default'
@@ -103,6 +116,27 @@
                 $modal.destroy(this.wdmodal)
         },
         methods: {
+            async initData() {
+                let self = this
+                let userinfo = this.$store.state.userinfo
+                let userid = userinfo.id
+                ajax({
+                    api: 'task',
+                    params: {
+                        type: 'getPeicaiCon',
+                        userid: userid,
+                        taskid: self.$route.query.taskid
+                    }
+                }).then(function (res) {
+                    if (!res.data.errcode) {
+                        self.$store.state.peicai = res.data.data
+                        self.$store.dispatch('hideLoading')
+                        self.initModal()
+                    }
+                }).catch(function (err) {
+                    console.log(err);
+                })
+            },
             showzlmodal() {
                 this.zlmodal.show()
             },
@@ -117,6 +151,96 @@
             },
             showwdmodal() {
                 this.wdmodal.show()
+            },
+            initModal () {
+                this.$store.state.peicai.forEach(function(el) {
+                    switch (el.p_type) {
+                        case "主料":
+                            this.zlmodal.content.topics.push(this.calcmax(el))
+                            break;
+                        case "辅料":
+                            this.flmodal.content.topics.push(this.calcmax(el))
+                            break;
+                        case "调料":
+                            this.twlmodal.content.topics.push(this.calcmax(el))
+                            break;
+                        case "工具":
+                            this.toolsmodal.content.topics.push(this.calcmax(el))
+                            break;
+                        case "温度":
+                            this.wdmodal.content.topics.push(this.calcmax(el))
+                            break;
+                        default:
+                            break;
+                    }
+                }, this);
+            },
+            calcmax(el){
+                let max = Math.round(el.p_shuliang*(Math.random()+1))
+                el.max = max
+                return el
+            },
+            formatData(array){
+                let formatData = []
+                array.forEach(function(el, i) {
+                    let formatDataItem = {}
+                    formatDataItem.peicaiid = el.id
+                    formatDataItem.shuliang = el.commit_shuliang
+                    formatData.push(formatDataItem)
+                }, this);
+                return formatData
+            },
+            cimmit(){
+                let commitData = this.zlmodal.content.chosenTopics.concat(
+                    this.flmodal.content.chosenTopics,
+                    this.twlmodal.content.chosenTopics,
+                    this.toolsmodal.content.chosenTopics,
+                    this.wdmodal.content.chosenTopics
+                )
+                let userinfo = this.$store.state.userinfo
+                let userid = userinfo.id
+                let self = this
+                let peicaiCommit = this.formatData(commitData)
+
+                this.$store.state.commitPeicai = commitData;
+                this.$store.dispatch('showLoading')
+
+                ajax({
+                    api: 'task',
+                    method: 'post',
+                    params: {
+                        type: 'PeicaiCommit',
+                        userid: userid,
+                        taskid: self.$route.query.taskid,
+                        data: JSON.stringify(peicaiCommit)
+                    }
+                }).then(function (res) {
+                    if (!res.data.errcode) {
+                        $dialog.alert({
+                            // 标题
+                            title: '提示',
+                            // 内容
+                            content: '配菜数据提交成功',
+                            // 按钮文本
+                            okText: '确定'
+                        })
+                        self.$store.dispatch('hideLoading')
+                    }
+                }).catch(function (err) {
+                    console.log(err);
+                    $dialog.alert({
+                        // 标题
+                        title: '提示',
+                        // 内容
+                        content: '[' + res.data.errcode + '] ' + res.data.errmsg,
+                        // 按钮文本
+                        okText: '确定'
+                    })
+                    re.dispatch('hideLoading')
+                })
+            },
+            steps() {
+                $router.push({ name: 'task', query: { taskid: this.$route.query.taskid } })
             }
         }
     }

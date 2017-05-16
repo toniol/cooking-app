@@ -71,12 +71,13 @@ export default {
     },
     methods: {
         gotoTasking(item) {
-            let userinfo = this.$store.state.userinfo
-            if (userinfo.type === '教师') {
-                $router.push({ name: 'task', query: { taskid: item.id } })
-            } else {
-                $router.push({ name: 'tips', query: { taskid: item.id } })
-            }
+            // let userinfo = this.$store.state.userinfo
+            // if (userinfo.type === '教师') {
+            //     $router.push({ name: 'task', query: { taskid: item.id } })
+            // } else {
+            
+            // }
+            $router.push({ name: 'tips', query: { taskid: item.id } })
         },
         gotoTasked(item) {
             $router.push({ name: 'classtasklist', query: { taskid: item.id } })

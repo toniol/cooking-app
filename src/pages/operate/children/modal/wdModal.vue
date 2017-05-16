@@ -1,17 +1,27 @@
 <template>
     <div class="page-content padding-top">
-        <von-checkbox :options="topics" v-model="chosenTopics" theme="positive"></von-checkbox>
-        <p>{{ chosenTopics }}</p>
+        <checkbox-range 
+            :options="topics" 
+            unit="℃"
+            v-model="chosenTopics" 
+            theme="positive"></checkbox-range>
+        <p class="padding">
+            <!--chosen topics: {{ chosenTopics }}-->
+        </p>
     </div>
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                chosenTopics: [],
-                topics: ["温度1", "温度2", "温度3", "温度4", "温度5"],
-            }
+import CheckboxRange from '../../../../components/checkoxRange/checkbox-range'
+export default {
+    data() {
+        return {
+            chosenTopics: [],
+            topics: []
         }
+    },
+    components: {
+        CheckboxRange
     }
+}
 </script>

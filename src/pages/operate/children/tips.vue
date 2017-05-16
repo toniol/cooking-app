@@ -12,7 +12,7 @@
                 </md-button>
 
                 <md-button class="md-button button button-positive button-block"
-                           @click.native="clicked()">
+                           @click.native="steps()">
                     步 骤
                 </md-button>
             </div>
@@ -50,7 +50,7 @@ export default {
                 console.log(err);
             })
         },
-        clicked() {
+        steps() {
             $router.push({ name: 'task', query: { taskid: this.$route.query.taskid } })
         },
         peicai(){

@@ -3,23 +3,24 @@
         <div class="item item-borderless item-icon-right" v-for="(option, i) in options" @click="onClick(option, i)">
             <div class="hairline-top" v-if="i > 0"></div>
     
-            <input type="checkbox" :name="checkboxName" :id="checkboxName + '-' + i" v-model="v" :value="option.name">
-            <span v-text="option.name"></span>
-            <span class="item-note">{{ranges[i] || 0}} {{unit}}</span>
-            <span class="range range-balanced" von-range="">
-                <span>{{min}}</span>
-            <input type="range" min="0" max="100" v-model="ranges[i]">
-            <span>{{max}}</span>
+            <input type="checkbox" :name="checkboxName" :id="checkboxName + '-' + i" v-model="v" :value="option.p_name">
+            <span v-text="option.p_name"></span>
+            <span v-if="option.p_type !== '工具'" class="item-note">{{option.commit_shuliang}} {{unit}}</span>
+            <span v-if="option.p_type !== '工具'" class="range range-balanced" von-range="">
+                <span>{{0}}</span>
+            <input type="range" min="0" :max="option.max" v-model="option.commit_shuliang">
+            <span>{{option.max}}</span>
             </span>
-            <i :class="{
-                          'icon ion-ios-checkmark-empty assertive': v.indexOf(option) > -1 && theme == 'assertive',
-                          'icon ion-ios-checkmark-empty positive': v.indexOf(option) > -1 && theme == 'positive',
-                          'icon ion-ios-checkmark-empty balanced': v.indexOf(option) > -1 && theme == 'balanced',
-                          'icon ion-ios-checkmark-empty energized': v.indexOf(option) > -1 && theme == 'energized',
-                          'icon ion-ios-checkmark-empty calm': v.indexOf(option) > -1 && theme == 'calm',
-                          'icon ion-ios-checkmark-empty royal': v.indexOf(option) > -1 && theme == 'royal',
-                          'icon ion-ios-checkmark-empty dark': v.indexOf(option) > -1 && theme == 'dark'
-                        }">
+            <i :class="['icon',
+                          v.indexOf(option) > -1 || (option.ischeck == 'True') ? 'ion-ios-checkmark-outline ' : 'ion-ios-circle-outline',
+                          theme == 'assertive' ? 'assertive' : '',
+                          theme == 'positive' ? 'positive' : '',
+                          theme == 'balanced' ? 'balanced' : '',
+                          theme == 'energized' ? 'energized' : '',
+                          theme == 'calm' ? 'calm' : '',
+                          theme == 'royal' ? 'royal' : '',
+                          theme == 'dark' ? 'dark' : ''
+                        ]">
                       </i>
     
             <div class="hairline-bottom" v-if="i < options.length - 1"></div>
@@ -41,10 +42,6 @@ export default {
             type: String,
             default: 'assertive'
         },
-        min: {
-            type: Number,
-            default: 0
-        },
         max: {
             type: Number,
             default: 100
@@ -62,15 +59,13 @@ export default {
     data() {
         return {
             checkboxName: 'von-checkbox-' + Math.random().toString(36).substring(3, 6),
-            rangeName: 'von-range-' + Math.random().toString(36).substring(3, 6),
-            ranges: []
+            rangeName: 'von-range-' + Math.random().toString(36).substring(3, 6)
         }
     },
     methods: {
         onClick(option, i) {
             let index = this.v.indexOf(option)
             if (index == -1) {
-                this.options[i].weight = this.ranges[i] || 0
                 this.v.push(option)
             } else {
                 this.v.splice(index, 1)
@@ -91,7 +86,9 @@ export default {
     height: 14px;
     line-height: 1;
 }
-
+.von-checkbox .item-icon-right .icon {
+    font-size: 28px;
+}
 .item-note {
     width: 36px;
 }
