@@ -16,8 +16,8 @@
                                 <th>类别</th>
                                 <th>名称</th>
                                 <th>用量</th>
-                                <th>答案</th>
-                                <th>是否正确</th>
+                                <th>正确用量</th>
+                                <th>结果</th>
                             </tr>
                         </thead>
                     </table>
@@ -32,32 +32,38 @@
                             <col style="width: 20%" />
                         </colgroup>
                         <tbody v-for="(value, key) in peicai">
-                            <tr v-for="(item, index) in value">
+                            <tr v-for="(item, index) in value" :class="{error: item.error}">
                                 <td v-if="index === 0" :rowspan="value.length">{{item.p_type}}</td>
                                 <td>{{item.p_name}}</td>
                                 <td>{{item.commit_shuliang}}</td>
                                 <td>{{item.p_shuliang}}</td>
-                                <td><i :class="['icon',
-                                            item.isRight === 'True' ? 'ion-ios-checkmark-empty balanced' : 'ion-ios-close-empty assertive'
-                                        ]">
-                                    </i>
+                                <td v-html="reason(item, value, index)">
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-    
-            <von-input type="text" v-model="pingfen" placeholder="评分为百分制" label="评分"></von-input>
+
+            <div class="item item-borderless thin-border step">
+                <div class="hairline-top"></div>
+                <div class="hairline-bottom"></div>
+                步骤：{{step}}
+            </div>
+            
+            <div class="item item-borderless thin-border" v-if="!isteacher">
+                <div class="hairline-top"></div>
+                <div class="hairline-bottom"></div>
+                评分：{{pingfen}}
+            </div>
+            <von-input v-else type="text" v-model="pingfen" placeholder="评分为百分制" label="评分："></von-input>
     
             <div class="item item-borderless thin-border">
                 <div class="hairline-top"></div>
                 <div class="hairline-bottom"></div>
-                <c-textarea placeholder="请填写评语" :rows="6" :showCounter="false" v-model="comment"></c-textarea>
+                <c-textarea placeholder="请填写评语" :rows="6" :showCounter="false" v-model="comment" :readonly="!isteacher"></c-textarea>
             </div>
-            <br>
-            <br>
-            <div class="padding">
+            <div class="padding" v-if="isteacher">
                 <md-button class="md-button button button-positive button-block" @click.native="commit()">
                     提 交
                 </md-button>
@@ -79,72 +85,54 @@ export default {
     },
     data() {
         return {
-            peicai: _.groupBy([
-            {
-                commit_shuliang: "0",
-                id: "e100913d-0ba6-4dca-809d-b3c1dc841f75",
-                isRight: "False",
-                p_name: "羊肉",
-                p_shuliang: "400",
-                p_type: "工具"
-            },
-            {
-                commit_shuliang: "0",
-                id: "e100913d-0ba6-4dca-809d-b3c1dc841f75",
-                isRight: "False",
-                p_name: "羊肉",
-                p_shuliang: "400",
-                p_type: "辅料"
-            }, {
-                commit_shuliang: "370",
-                id: "e1e90ce6-7b22-4c8b-ad16-d2683c1026e5",
-                isRight: "True",
-                p_name: "猪肉",
-                p_shuliang: "500",
-                p_type: "主料"
-            }, {
-                commit_shuliang: "0",
-                id: "e100913d-0ba6-4dca-809d-b3c1dc841f75",
-                isRight: "False",
-                p_name: "羊肉",
-                p_shuliang: "400",
-                p_type: "主料"
-            }, {
-                commit_shuliang: "370",
-                id: "e1e90ce6-7b22-4c8b-ad16-d2683c1026e5",
-                isRight: "True",
-                p_name: "猪肉",
-                p_shuliang: "500",
-                p_type: "辅料"
-            }, 
-            {
-                commit_shuliang: "0",
-                id: "e100913d-0ba6-4dca-809d-b3c1dc841f75",
-                isRight: "False",
-                p_name: "羊肉",
-                p_shuliang: "400",
-                p_type: "调味料"
-            }, {
-                commit_shuliang: "0",
-                id: "e100913d-0ba6-4dca-809d-b3c1dc841f75",
-                isRight: "False",
-                p_name: "羊肉",
-                p_shuliang: "400",
-                p_type: "辅料"
-            }], 'p_type'),
+            peicai: [],
             pingfen: '',
-            comment: ''
+            comment: '',
+            step: '',
+            error: false,
+            isteacher: false
         }
     },
     created() {
         let taskinfo = this.$route.params.taskinfo
+        let userinfo = this.$store.state.userinfo
+
+        if(userinfo.type === '教师'){
+            this.isteacher = true
+        }
+
         if (taskinfo) {
             this.pingfen = taskinfo.fenshu
             this.comment = taskinfo.pingyu
+            this.step = taskinfo.step
         }
+
+        this.initData()
+
         this.$store.dispatch('hideLoading')
     },
     methods: {
+        async initData() {
+            let userinfo = this.$store.state.userinfo
+            let self = this
+            let taskid = self.$route.query.taskid
+            let userid = self.$route.query.userid
+
+            ajax({
+                api: 'task',
+                params: {
+                    type: 'GetTaskPeicaiByUserid',
+                    taskid: taskid,
+                    userid: userid
+                }
+            }).then(function (res) {
+                if (!res.data.errcode) {
+                    self.peicai = _.groupBy(res.data.data, 'p_type')
+                }
+            }).catch(function (err) {
+                console.log(err)
+            })
+        },
         commit() {
             let self = this
             let id = this.$route.query.id
@@ -183,17 +171,35 @@ export default {
             }).catch(err => {
                 console.log(err)
             })
+        },
+        reason(item, value, index){
+            if((item.isRight === 'True' && item.isCheck === "False") || (item.isRight === 'False' && item.isCheck === 'True')){
+                this.$set(value[index], 'error', true)
+                return '选料错误'
+            } else {
+                if(item.isCheck !== 'False' && item.isRight !== 'False'){
+                    if(item.commit_shuliang !== item.p_shuliang){
+                        this.$set(value[index], 'error', true)
+                        return '用量错误'
+                    } else {
+                        return '<i class="icon ion-ios-checkmark-empty balanced"></i>'
+                    }
+                } else {
+                    return '<i class="icon ion-ios-checkmark-empty balanced"></i>'
+                }
+                
+            }
         }
     }
 }
 </script>
 
 <style>
-/*.peicaiTable {
-    max-height: 240px;
+.step {
     overflow: auto;
-    margin-bottom: 20px;
-}*/
+    white-space: normal;
+    line-height: 1.5;
+}
 
 .peicaiTable table {
     width: 100%;
@@ -231,5 +237,13 @@ export default {
 
 .table-body .icon {
     font-size: 28px;
+}
+.error:first-child td:first-child {
+    color: #000;
+    background: #fff;
+} 
+.error td {
+    color: #fff;
+    background-color: #EA5A49;
 }
 </style>

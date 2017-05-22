@@ -23,7 +23,8 @@
                 <item v-for="item in tasklist"
                       class="item-icon-left item-icon-right"
                       @click.native="scandetail(item)">
-                    {{item.username}}
+                    {{item.username}} (得分: {{item.fenshu}})
+                    <span class="item-note">{{item.releasetime.split(' ')[0]}}</span>
                     <i class="icon ion-ios-person-outline"></i>
                     <i class="icon ion-ios-arrow-right"></i>
                 </item>
@@ -98,15 +99,15 @@ export default {
 
             if(userinfo.type === '教师'){
                 params = {
-                    type: 'teacherGetTaskCommitList',
+                    type: 'GetTaskCommitListByclassid',
                     taskid: taskid,
                     classid: classid
                 }
             } else {
                 params = {
-                    type: 'studentGetTaskCommitList',
+                    type: 'GetTaskCommitListByclassid',
                     taskid: taskid,
-                    userid: userinfo.id
+                    classid: userinfo.classid
                 }
             }
             ajax({
@@ -143,30 +144,7 @@ export default {
             })
         },
         scandetail(item) {
-            let userinfo = this.$store.state.userinfo
-            
-            if(userinfo.type === '教师'){
-                this.$router.push({name: 'comment', query: {id: item.id}, params: {taskinfo: item}})
-            } else {
-                let options = {
-                    effect: 'scale',
-                    title: '',
-                    buttons: [
-                        { text: '确定', theme: 'assertive' }
-                    ],
-                    showClose: true
-                }
-                let template = `
-                    <p>评语: ${item.pingyu}</p>
-                    <p>分数: ${item.fenshu}</p>
-                    <p>步骤: ${item.step}</p>
-                    <p>时间: ${item.releasetime}</p>
-                `
-                let popup = $popup.fromTemplate(template, options)
-                popup.show().then((buttonIndex) => {
-                    // console.log(buttonIndex)
-                })
-            }
+            this.$router.push({name: 'comment', query: {id: item.id, userid: item.userid, taskid: this.$route.query.taskid}, params: {taskinfo: item}})
         }
     }
 }
