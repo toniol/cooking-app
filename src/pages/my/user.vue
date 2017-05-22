@@ -45,7 +45,7 @@
     },
     data () {
       return {
-        url: "https://o3e85j0cv.qnssl.com/waterway-107810__340.jpg",
+        url: require('../../assets/images/photo-1466495227171-d05d7e3ac2b3.jpg'),
         username: ''
       }
     },
