@@ -203,8 +203,6 @@
                     this.wdmodal.content.chosenTopics
                 )
 
-                console.log(commitData)
-
                 let userinfo = this.$store.state.userinfo
                 let userid = userinfo.id
                 let self = this
