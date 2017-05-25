@@ -156,18 +156,23 @@
                 this.$store.state.peicai.forEach(function(el) {
                     switch (el.p_type) {
                         case "主料":
+                            if(el.ischeck === 'True') this.zlmodal.content.chosenTopics.push(el)
                             this.zlmodal.content.topics.push(this.calcmax(el))
                             break;
                         case "辅料":
+                            if(el.ischeck === 'True') this.flmodal.content.chosenTopics.push(el)
                             this.flmodal.content.topics.push(this.calcmax(el))
                             break;
                         case "调料":
+                            if(el.ischeck === 'True') this.twlmodal.content.chosenTopics.push(el)
                             this.twlmodal.content.topics.push(this.calcmax(el))
                             break;
                         case "工具":
+                            if(el.ischeck === 'True') this.toolsmodal.content.chosenTopics.push(el)
                             this.toolsmodal.content.topics.push(this.calcmax(el))
                             break;
                         case "温度":
+                            if(el.ischeck === 'True') this.wdmodal.content.chosenTopics.push(el)
                             this.wdmodal.content.topics.push(this.calcmax(el))
                             break;
                         default:
@@ -183,10 +188,10 @@
             formatData(array){
                 let formatData = []
                 array.forEach(function(el, i) {
-                    let formatDataItem = {}
-                    formatDataItem.peicaiid = el.id
-                    formatDataItem.shuliang = el.commit_shuliang
-                    formatData.push(formatDataItem)
+                        let formatDataItem = {}
+                        formatDataItem.peicaiid = el.id
+                        formatDataItem.shuliang = el.commit_shuliang
+                        formatData.push(formatDataItem)
                 }, this);
                 return formatData
             },
@@ -197,6 +202,9 @@
                     this.toolsmodal.content.chosenTopics,
                     this.wdmodal.content.chosenTopics
                 )
+
+                console.log(commitData)
+
                 let userinfo = this.$store.state.userinfo
                 let userid = userinfo.id
                 let self = this

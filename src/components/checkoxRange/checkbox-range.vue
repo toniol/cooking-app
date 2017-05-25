@@ -5,7 +5,7 @@
     
             <input type="checkbox" :name="checkboxName" :id="checkboxName + '-' + i" v-model="v" :value="option.p_name">
             <span v-text="option.p_name"></span>
-            <span v-if="option.p_type !== '工具'" class="item-note">{{option.commit_shuliang}} {{unit}}</span>
+            <span v-if="option.p_type !== '工具'" class="item-note"><input class="numinput" type="number" v-model="option.commit_shuliang"> {{unit}}</span>
             <span v-if="option.p_type !== '工具'" class="range range-balanced" von-range="">
                 <span>{{0}}</span>
             <input type="range" min="0" :max="option.max" v-model="option.commit_shuliang">
@@ -91,5 +91,15 @@ export default {
 }
 .item-note {
     width: 36px;
+}
+.numinput {
+    width: 24px;
+    display: inline-block;
+    vertical-align: middle;
+    color: #aaa;
+    height: 100%;
+    padding: 0;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
 }
 </style>
