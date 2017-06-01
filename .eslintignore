@@ -1,0 +1,5 @@
+.git
+dist/
+publish/
+src/utils.js
+node_modules/
